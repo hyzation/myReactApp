@@ -36,7 +36,9 @@ export default function Index() {
 
     return (
         <>
-            <PerspectiveCamera makeDefault ref={cam}
+            <PerspectiveCamera
+                makeDefault
+                ref={cam}
                 position={cameraPosition}
                 fov={75} far={2000}
             />
