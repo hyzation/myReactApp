@@ -28,20 +28,7 @@ code {
   height: 100vh;
 }
 
-.appBox {
-  width: 100%;
-  height: auto;
-  padding: 50px;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-
-.appTag {
-  width: 25%;
-  height: 20vh;
-  border: 1px solid #eee;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+a {
+  text-decoration: none;
+  color: black;
 }
