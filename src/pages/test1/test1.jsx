@@ -1,7 +1,9 @@
+// import { Sphere } from "@react-three/fiber"
+
 export default function Index() {
     return (
         <>
-            111
+            <sphereGeometry args={[5, 40, 40]}></sphereGeometry>
         </>
     );
 }

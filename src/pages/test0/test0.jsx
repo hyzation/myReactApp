@@ -5,7 +5,7 @@ import React, {
 import {
     OrbitControls,
     PerspectiveCamera,
-    Environment,
+    // Environment,
     // useHelper,
 } from "@react-three/drei";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -23,7 +23,7 @@ export default function Index() {
     const pointLightPosition = [0, 10, 10];
     const cameraPosition = [20, 10, 0];
     // const cameraRotation = [Math.PI / 3, Math.PI / 2, Math.PI / 3];
-    const env = '/resource/env/view_1.hdr';
+    // const env = '/resource/env/view_1.hdr';
 
     const gltf = useLoader(GLTFLoader, '/model/spaceship.glb');
     const scale = 1

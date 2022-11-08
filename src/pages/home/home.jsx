@@ -1,20 +1,32 @@
 import './home.css'
 
-const list = [
-    { name: '测试0', tag: 'desc...', src: '/test0', },
-    { name: '测试1', tag: 'desc...', src: '/test1' },
-]
+const num = 5
+const list = () => {
+    let newlist = []
+    for (var i = 0; i <= num; i++) {
+        let obj = {
+            name: '测试' + i,
+            src: '/test' + i,
+        }
+        newlist.push(obj)
+    }
+    return newlist
+}
 
 export default function Home() {
     return (
         <div className='appBox'>
             {
-                list.map((item, index) => {
+                list().map((item, index) => {
                     return <a className='appTag' key={index} href={item.src}>
-                        <div>{item.name}</div>
+                        <div className='appTagBox'>
+                            <div>{item.name}</div>
+                        </div>
                     </a>
                 })
             }
+
+
         </div>
     );
 }

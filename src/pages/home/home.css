@@ -1,18 +1,36 @@
 .appBox {
     width: 100%;
     height: auto;
+    min-height: 100vh;
     padding: 50px;
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
+    box-sizing: border-box;
+    background: #eee;
 }
 
 .appTag {
     width: 25%;
     height: 20vh;
-    border: 1px solid #eee;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+}
+
+.appTagBox {
+    width: 80%;
+    height: 90%;
+    border-radius: 20px;
+    border: 1px solid #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 6px 4px 20px #999, -2px 1px 5px #999;
+    transition: all 0.5s;
+}
+
+.appTagBox:hover {
+    box-shadow: 2px 2px 1px #ddd;
 }
