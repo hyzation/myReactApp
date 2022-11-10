@@ -7,7 +7,8 @@ import Test1 from "../pages/test1/test1";
 export default function Index() {
     return (
         <>
-            <Canvas style={{ width: '100%', height: '100vh', }}>
+            <Canvas style={{ width: '100vw', height: '100vh', }}
+                camera={{ position: [200, 280, 0] }}>
                 <Suspense fallback={<Html style={{
                     color: '#000000',
                     width: '100px',

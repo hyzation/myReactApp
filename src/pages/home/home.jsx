@@ -14,19 +14,20 @@ const list = () => {
 }
 
 export default function Home() {
+
     return (
-        <div className='appBox'>
-            {
-                list().map((item, index) => {
-                    return <a className='appTag' key={index} href={item.src}>
-                        <div className='appTagBox'>
-                            <div>{item.name}</div>
-                        </div>
-                    </a>
-                })
-            }
-
-
-        </div>
+        <>
+            <div className='appBox'>
+                {
+                    list().map((item, index) => {
+                        return <a className='appTag' key={index} href={item.src}>
+                            <div className='appTagBox'>
+                                <div>{item.name}</div>
+                            </div>
+                        </a>
+                    })
+                }
+            </div>
+        </>
     );
 }
