@@ -7,6 +7,7 @@ import {
     PerspectiveCamera,
     // Environment,
     // useHelper,
+    useGLTF,
 } from "@react-three/drei";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 // import {
@@ -25,7 +26,12 @@ export default function Index() {
     // const cameraRotation = [Math.PI / 3, Math.PI / 2, Math.PI / 3];
     // const env = '/resource/env/view_1.hdr';
 
-    const gltf = useLoader(GLTFLoader, '/model/spaceship.glb');
+    const Model = () => {
+        const gltf = useLoader(GLTFLoader, '/model/cj2.glb');
+        return <primitive object={gltf.scene} scale={[scale, scale, scale]} />
+    }
+
+
     const scale = 1
 
     const cam = useRef();
@@ -51,12 +57,12 @@ export default function Index() {
             />
 
             <Suspense fallback={null}>
-                <primitive object={gltf.scene} scale={[scale, scale, scale]} />
+                <Model />
             </Suspense>
 
             <OrbitControls
                 ref={controls}
-                autoRotate={true}
+                autoRotate={false}
                 autoRotateSpeed={1}
                 camera={cam.current}
                 target={[0, 0, 0]}
@@ -64,7 +70,7 @@ export default function Index() {
                 // minAzimuthAngle={-Math.PI}
                 // maxAzimuthAngle={Math.PI / 4}
                 minPolarAngle={0}
-                maxPolarAngle={Math.PI / 3}
+                maxPolarAngle={Math.PI / 2}
                 enableZoom={true}
                 minDistance={10}
                 maxDistance={30}

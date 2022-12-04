@@ -11,6 +11,7 @@ const Test0 = lazy(() => import('./routes/test0'));
 const Test1 = lazy(() => import('./routes/test1'));
 const Test2 = lazy(() => import('./routes/test2'));
 const Test3 = lazy(() => import('./routes/test3'));
+const Test4 = lazy(() => import('./routes/test4'));
 
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/test1" element={<Test1 />} />
         <Route path="/test2" element={<Test2 />} />
         <Route path="/test3" element={<Test3 />} />
+        <Route path="/test4" element={<Test4 />} />
       </Routes>
     </Router>
   );

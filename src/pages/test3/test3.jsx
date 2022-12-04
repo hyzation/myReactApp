@@ -1,154 +1,193 @@
 import * as THREE from 'three'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import {
-    useGLTF, Clone,
-    MeshDistortMaterial,
+    useGLTF,
     OrbitControls,
-    PerspectiveCamera,
-    OrthographicCamera,
-    Reflector,
+    MeshReflectorMaterial,
     Environment,
+    CameraShake,
+    useCursor,
 } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
-import { BakeShadows } from '@react-three/drei';
+import { useFrame, useThree } from '@react-three/fiber'
+import { useNavigate } from 'react-router-dom';
 
 const material = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color('rgb(199,98,143)').convertSRGBToLinear(),
+    color: new THREE.Color('rgb(221,94,115)').convertSRGBToLinear(),
     roughness: 0,
     clearcoat: 1,
     clearcoatRoughness: 0,
 })
 
-export default function Index({ ...props }) {
+const material1 = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color('rgb(173,165,165)').convertSRGBToLinear(),
+    roughness: 0,
+    clearcoat: 1,
+    clearcoatRoughness: 0,
+})
 
+const material2 = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color('rgb(1,140,210)').convertSRGBToLinear(),
+    roughness: 0,
+    clearcoat: 1,
+    clearcoatRoughness: 0,
+})
+
+const material3 = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color('rgb(1,100,122)').convertSRGBToLinear(),
+    roughness: 0,
+    clearcoat: 1,
+    clearcoatRoughness: 0,
+})
+
+const material4 = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color('rgb(234,190,160)').convertSRGBToLinear(),
+    roughness: 0,
+    clearcoat: 1,
+    clearcoatRoughness: 0,
+})
+
+const material5 = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color('rgb(255,188,167)').convertSRGBToLinear(),
+    roughness: 0,
+    clearcoat: 1,
+    clearcoatRoughness: 0,
+})
+
+const material6 = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color('rgb(151,200,65)').convertSRGBToLinear(),
+    roughness: 0,
+    clearcoat: 1,
+    clearcoatRoughness: 0,
+})
+
+export default function Index({ props }) {
+    const [hovered, setHover] = useState(false)
+    useCursor(hovered)
+
+    const navigate = useNavigate()
     const goto = (e) => {
-        console.log(e);
+        setTimeout(() => {
+            navigate("/Halls", { state: e, });
+        }, 100)
     }
-
-
-    const pointLightPosition = [0, 10, 10];
-    const cameraPosition = [200, 280, 0];
-
-    const cam = useRef();
-
-    const controls = useRef();
 
     const group = useRef()
 
     const Model = () => {
         const { nodes } = useGLTF("/model/pinkd.glb");
         return (
-            // <primitive object={nodes} />
-            // <group ref={group} {...props} dispose={null}>
-            //     <group name="_Chambre" rotation={[-Math.PI / 2, 0, 0]}>
-            //         <Clone object={nodes.Lit_ORANGE} castShadow receiveShadow />
-            //         <Clone object={nodes.Tele_NOIR}>
-            //             <Screen />
-            //         </Clone>
-            //         <Clone object={Object.values(nodes).filter((n) => n.name.startsWith('Tapis_'))} receiveShadow />
-            //         <Clone object={[nodes.Caisse_01_BLANC, nodes.Caisse_02_BLANC, nodes.Caisse_03_BLANC]} castShadow receiveShadow />
-            //         <Clone
-            //             object={nodes.Bac_fleurs_BLANC}
-            //             castShadow
-            //             receiveShadow
-            //             inject={(object) =>
-            //                 object.name === 'Plante_VERT_VERT_0' && <MeshDistortMaterial speed={2.5} distort={0.25} color={[0.086, 0.58, 0.12]} roughness={0.3} />
-            //             }
-            //         />
-            //         <Clone object={nodes.Carres_muraux_GRIS} castShadow receiveShadow />
-            //         <Clone object={nodes.Fenetres_VITRE_VITRE_0} />
-            //         <Clone object={nodes.Stores_NOIR_NOIR_0} />
-            //         <Clone object={nodes.Tablette_NOIR_NOIR_0} />
-            //         <Clone object={nodes.Tasse_BLANC_BLANC_0} />
-            //         <Clone object={Object.values(nodes).filter((n) => n.name.startsWith('Vetement_'))} />
-            //         <Clone object={nodes.Tringle_METAL_METAL_0} />
-            //     </group>
-            //     <Clone object={nodes._Cuisine} castShadow receiveShadow />
-            //     <Clone object={nodes._Base} castShadow receiveShadow />
-            //     <Clone object={[nodes._Boites, nodes._Livres, nodes._Post_it, nodes._Ventilations]} castShadow />
-            //     <Lights />
-            // </group>
             <group ref={group} {...props} dispose={null}>
-                <Reflector
-                    resolution={1024}
-                    receiveShadow
-                    mirror={0}
-                    mixBlur={1}
-                    mixStrength={0.3}
-                    depthScale={1}
-                    minDepthThreshold={0.8}
-                    maxDepthThreshold={1}
-                    position={[0, 0, 8]}
-                    scale={[2, 2, 1]}
-                    rotation={[-Math.PI / 2, 0, Math.PI]}
-                    args={[70, 70]}>
-                    {(Material, props) => <Material metalness={0.25} color="#eea6b1" roughness={1} {...props} />}
-                </Reflector>
-                {/* <mesh receiveShadow castShadow material={material} geometry={nodes.Sphere.geometry} position={[-1.93, 1, -0.94]} rotation={[-Math.PI, 0.73, -Math.PI]} /> */}
-                {/* <mesh receiveShadow castShadow material={material} geometry={nodes.Sphere001.geometry} position={[4.49, 2.34, 3.58]} scale={[2.33, 2.33, 2.33]} onClick={() => { goto(1) }} /> */}
-                {/* 球 */}
+                {/* <MeshReflectorMaterial
+          resolution={1024}
+          receiveShadow
+          mirror={8}
+          mixBlur={1}
+          mixStrength={0.3}
+          depthScale={1}
+          minDepthThreshold={0.8}
+          maxDepthThreshold={1}
+          position={[0, 0, 8]}
+          scale={[2, 2, 1]}
+          rotation={[-Math.PI / 2, 0, Math.PI]}
+          args={[70, 70]}>
+          {(Material, props) => <Material metalness={0.25} color="rgb(207,216,220)" roughness={1} {...props} />}
+        </MeshReflectorMaterial> */}
+
+                <mesh rotation={[-Math.PI / 2, 0, 0]}>
+                    <planeGeometry args={[100, 100]} />
+                    <MeshReflectorMaterial
+                        // blur={[300, 100]}
+                        resolution={2048}
+                        mixBlur={1}
+                        // mixStrength={1}
+                        roughness={1}
+                        depthScale={1.2}
+                        minDepthThreshold={0.4}
+                        maxDepthThreshold={1.4}
+                        color="rgb(207,216,220)"
+                        metalness={0.5}
+                    />
+                </mesh>
+
+                {/* 圆柱 */}
                 <mesh
                     receiveShadow
                     castShadow
-                    material={material}
-                    geometry={nodes.Sphere001.geometry}
-                    position={[-16, 5, 17]}
-                    rotation={[-0.26, 0.04, -0.16]}
-                    scale={[3, 3, 3]}
+                    material={material1}
+                    geometry={nodes.Cylinder.geometry}
+                    position={[-12.3, 2.41, 1.53]}
+                    scale={[1, 1.2, 1]}
+                    // onPointerOver={(e) => (e.stopPropagation(), setHover(true))}
+                    // onPointerOut={(e) => setHover(false)}
+                    onClick={() => { goto(1) }}
                 />
-                {/* <mesh receiveShadow castShadow material={material} geometry={nodes.Sphere002.geometry} position={[-5.28, 4.8, 5.12]} /> */}
-                {/* <mesh receiveShadow castShadow material={material} geometry={nodes.Sphere003.geometry} position={[-10.13, 1.3, -3.95]} rotation={[-0.15, 0.01, -0.02]} /> */}
-                {/* 海星家 */}
-                {/* <mesh
-                    receiveShadow
-                    castShadow
-                    material={material}
-                    geometry={nodes.Sphere004.geometry}
-                    position={[-19.36, 1.05, -2.05]}
-                    rotation={[0, 0, 0.64]}
-                    scale={[-1.33, -1.33, -1.33]}
-                /> */}
-                {/* <mesh receiveShadow castShadow material={material} geometry={nodes.Sphere005.geometry} position={[-18.17, 0.94, -2.35]} scale={[0.87, 0.87, 0.87]} /> */}
                 {/* 环 */}
                 <mesh
                     receiveShadow
                     castShadow
-                    material={material}
+                    material={material2}
                     geometry={nodes.Torus.geometry}
-                    position={[-0.36, 3, 0.73]}
+                    position={[-5, 4, 0.73]}
                     rotation={[Math.PI / 2, 0, 0]}
-                    scale={[2, 2, 2]}
+                    scale={[3, 3, 3]}
+                    // onPointerOver={(e) => (e.stopPropagation(), setHover(true))}
+                    // onPointerOut={(e) => setHover(false)}
+                    onClick={() => { goto(2) }}
                 />
-                {/* 圆锥 */}
-                <mesh receiveShadow castShadow material={material} geometry={nodes.Cone.geometry} position={[2.3, 1.91, -4.41]} scale={[1.86, 1.86, 1.86]} />
-                {/* <mesh receiveShadow castShadow material={material} geometry={nodes.Cone001.geometry} position={[-4.82, 0.47, -5.51]} rotation={[2.14, 0, -0.58]} /> */}
+                {/* 球 */}
+                <mesh
+                    receiveShadow
+                    castShadow
+                    material={material3}
+                    geometry={nodes.Sphere001.geometry}
+                    position={[11, 3.97, 2]}
+                    rotation={[0, 0, 0]}
+                    scale={[4, 4, 4]}
+                    style={{}}
+                    // onPointerOver={(e) => (e.stopPropagation(), setHover(true))}
+                    // onPointerOut={(e) => setHover(false)}
+                    onClick={() => { goto(3) }}
+                />
                 {/* 正方体 */}
                 <mesh
                     receiveShadow
                     castShadow
-                    material={material}
+                    material={material4}
                     geometry={nodes.Cube.geometry}
-                    position={[-5.36, 1.94, 5.46]}
+                    position={[-2, 1.8, 8]}
                     rotation={[0, 0.42, 0]}
-                    scale={[1.9, 1.9, 1.9]}
+                    scale={[1.7, 1.7, 1.7]}
+                    // onPointerOver={(e) => (e.stopPropagation(), setHover(true))}
+                    // onPointerOut={(e) => setHover(false)}
+                    onClick={() => { goto(4) }}
                 />
-                {/* <mesh receiveShadow castShadow material={material} geometry={nodes.Cube001.geometry} position={[-1.8, 1, -10.04]} rotation={[0, -0.23, 0]} /> */}
-                {/* 圆柱 */}
-                <mesh receiveShadow castShadow material={material} geometry={nodes.Cylinder.geometry} position={[-12.3, 2.41, 1.53]} />
-                {/* <mesh
+                {/* 圆锥 */}
+                <mesh
                     receiveShadow
                     castShadow
-                    material={material}
-                    geometry={nodes.Cylinder001.geometry}
-                    position={[-10.47, 1.57, -8.75]}
-                    rotation={[Math.PI / 2, 0, -1.87]}
-                    scale={[1.55, 1.55, 1.55]}
-                /> */}
+                    material={material5}
+                    geometry={nodes.Cone.geometry}
+                    position={[4, 2.5, 13]}
+                    scale={[2.5, 2.5, 2.5]}
+                    // onPointerOver={(e) => (e.stopPropagation(), setHover(true))}
+                    // onPointerOut={(e) => setHover(false)}
+                    onClick={() => { goto(5) }}
+                />
                 {/* 缺口圆柱 */}
                 {/* <mesh receiveShadow castShadow material={material} geometry={nodes.Cylinder002.geometry} position={[-1.15, 3.38, 14.39]} rotation={[0, Math.PI, 0]} /> */}
-                {/* <mesh receiveShadow castShadow material={material} geometry={nodes.Icosphere.geometry} position={[7.29, 0.6, -5.63]} scale={[0.64, 0.64, 0.64]} /> */}
                 {/* 高尔夫 */}
-                <mesh receiveShadow castShadow material={material} geometry={nodes.Icosphere001.geometry} position={[7.26, 1.5, 12.9]} rotation={[-0.26, 0.04, -0.16]} scale={[1.55, 1.55, 1.55]} />
+                <mesh
+                    receiveShadow
+                    castShadow
+                    material={material6}
+                    geometry={nodes.Icosphere001.geometry}
+                    position={[-7, 1.5, 15]}
+                    rotation={[-0.26, 0.04, -0.16]}
+                    scale={[1.4, 1.4, 1.4]}
+                    // onPointerOver={(e) => (e.stopPropagation(), setHover(true))}
+                    // onPointerOut={(e) => setHover(false)}
+                    onClick={() => { goto(6) }}
+                />
             </group>
         )
     }
@@ -163,15 +202,25 @@ export default function Index({ ...props }) {
         )
     }
 
+    const Rig = () => {
+        const [vec] = useState(() => new THREE.Vector3())
+        const { camera, mouse } = useThree()
+        useFrame(() => camera.position.lerp(vec.set(mouse.x * 2, 8, 40), 0.05))
+        // return <CameraShake maxYaw={0.01} maxPitch={0.01} maxRoll={0.01} yawFrequency={0.5} pitchFrequency={0.5} rollFrequency={0.4} />
+        return <CameraShake maxYaw={0} maxPitch={0} maxRoll={0} yawFrequency={0} pitchFrequency={0} rollFrequency={0} />
+    }
+
+
     return (
         <>
-            {/* <ambientLight intensity={0.5} /> */}
+            <ambientLight intensity={0.5} />
             <Model position={[-4.5, -4, 0]} rotation={[0, -2.8, 0]} />
             {/* <spotLight position={[50, 50, -30]} castShadow /> */}
-            {/* <pointLight position={[-10, -10, -10]} color="red" intensity={3} /> */}
+            {/* <pointLight position={[-10, -10, -10]} color="white" intensity={3} /> */}
             {/* <pointLight position={[0, -5, 5]} intensity={0.5} /> */}
-            {/* <directionalLight position={[0, -5, 0]} color="red" intensity={2} /> */}
+            <directionalLight position={[0, -5, 20]} color="white" intensity={2} />
             <Lights />
+            <Rig />
             <Environment preset="warehouse" />
 
             <OrbitControls

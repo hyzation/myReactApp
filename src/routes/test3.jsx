@@ -1,42 +1,35 @@
-import React, { Suspense } from "react";
-import { Html, Bounds, BakeShadows } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+import {
+    Canvas
+} from "@react-three/fiber";
 import Test3 from "../pages/test3/test3";
+import { Suspense } from "react";
 
 
-export default function Index() {
+/**
+ * 3D渲染页面
+ * @returns {JSX.Element}
+ * @constructor
+ */
+export default function Home() {
+    // const [planetFrameState, planetFrameDispatch] = useReducer(reducer, '', init);
+
     return (
-        <>
-            <Canvas style={{ width: '100vw', height: '100vh' }}
-                camera={{ position: [10, 10, 10], zoom: 10, }}
-                // orthographic
-                shadows
-                dpr={[2, 2]}
-            >
-
-
-
-
-
-                <Suspense fallback={<Html style={{
-                    color: '#000000',
-                    width: '100px',
-                }} center>加载中...</Html>}>
-
-                    {/* <color attach="background" args={['#252530']} /> */}
-                    {/* <ambientLight intensity={0.01} /> */}
-                    {/* <hemisphereLight intensity={0.125} color="#8040df" groundColor="red" /> */}
-                    {/* <spotLight castShadow color="orange" intensity={2} position={[-50, 50, 40]} angle={0.25} penumbra={1} shadow-mapSize={[128, 128]} shadow-bias={0.00005} /> */}
-
-
-                    {/* <Bounds fit clip observe margin={1}> */}
-                    <Test3 scale={0.1}/>
-                    {/* </Bounds> */}
-
-
-
-                </Suspense>
-            </Canvas>
-        </>
+        <Suspense>
+            <div style={{ width: '100vw', height: '100vh', background: 'rgb(221,223,224)', }}>
+                {/* <Canvas style={{ width: '100vw', height: '100vh' }}
+          camera={{ position: [10, 10, 10], zoom: 10, }}
+          shadows
+          dpr={[2, 2]}
+        > */}
+                <Canvas
+                    // style={{ width: '100vw', height: '100vh' }}
+                    shadows
+                    dpr={[1, 2]}
+                    camera={{ position: [0, 15, 80], fov: 20 }}
+                >
+                    <Test3 />
+                </Canvas>
+            </div>
+        </Suspense>
     );
 }
