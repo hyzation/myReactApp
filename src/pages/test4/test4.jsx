@@ -1,90 +1,61 @@
+import React, { useEffect, useRef, useState } from 'react'
+import ReactDOM from 'react-dom'
+import { Canvas, useFrame } from '@react-three/fiber'
+
 import * as THREE from 'three'
-import { useEffect, useRef, useState } from 'react'
-import {
-    useFBX,
-    useGLTF,
-    useTexture,
-    OrbitControls,
-    PerspectiveCamera,
-    Environment,
-} from '@react-three/drei'
-import { useFrame, useLoader } from '@react-three/fiber'
-import { BakeShadows } from '@react-three/drei';
 
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+// import './styles.css'
 
+const dummy = new THREE.Vector3()
+const lookAtPos = new THREE.Vector3()
 
-const Obj1 = () => {
-    const fbx1 = useFBX("/model/fbx/dingbuyuanhaun.FBX");
-    console.log(fbx1);
-    return <primitive object={fbx1} />;
-}
+const Thing = () => {
+    const ref = useRef()
+    // useFrame(() => (ref.current.rotation.x = ref.current.rotation.y += 0.01))
 
-const Obj2 = () => {
-    const gltf = useGLTF("/model/spaceship.glb");
-    // const gltf = useLoader(GLTFLoader, '/model/spaceship.glb');
-    return <primitive object={gltf.scene} />;
-}
+    const [zoom, setZoom] = useState(false)
 
+    useEffect(() => {
+        setTimeout(() => {
+            setZoom((zoom) => !zoom)
+        }, 5000)
+    }, [zoom])
 
+    useFrame((state, delta) => {
+        const step = 0.01
+        state.camera.fov = THREE.MathUtils.lerp(state.camera.fov, zoom ? 10 : 42, step)
+        state.camera.position.lerp(dummy.set(zoom ? 25 : 10, zoom ? 1 : 5, zoom ? 0 : 10), step)
 
-export default function Index({ ...props }) {
-    const texture1 = useTexture('/model/textures/dingbuyuanhuan/dingbuyuanhaun_BaseColor.png')
+        // lookAtPos.x = Math.sin(state.clock.getElapsedTime() * 2)
 
-    const pointLightPosition = [0, 10, 10];
-    const cameraPosition = [20, 10, 0];
-    // const cameraRotation = [Math.PI / 3, Math.PI / 2, Math.PI / 3];
-    // const env = '/resource/env/view_1.hdr';
-
-    const scale = 1
-
-    const cam = useRef();
-    // const pointLight1 = useRef();
-    // useHelper(pointLight1, PointLightHelper, 5, "red");
-
-    const controls = useRef();
-
-
-
+        state.camera.lookAt(lookAtPos)
+        state.camera.updateProjectionMatrix()
+    })
 
     return (
-        <>
-            {/* <ambientLight intensity={0.5} /> */}
-            {/* <spotLight position={[50, 50, -30]} castShadow /> */}
-            {/* <pointLight position={[-10, -10, -10]} color="red" intensity={3} /> */}
-            {/* <pointLight position={[0, -5, 5]} intensity={0.5} /> */}
-            {/* <directionalLight position={[0, -5, 0]} color="red" intensity={2} /> */}
-            {/* <Environment preset="warehouse" /> */}
-
-            <PerspectiveCamera
-                makeDefault
-                ref={cam}
-                position={cameraPosition}
-                fov={75} far={2000}
-            />
-
-            <pointLight
-                // ref={pointLight1}
-                position={pointLightPosition}
-                intensity={1}
-                distance={30}
-            />
-
-
-            {/* <Obj1 map={texture1} /> */}
-            <Obj2 />
-
-            <OrbitControls
-                makeDefault
-                minAzimuthAngle={0}
-                // maxAzimuthAngle={Math.PI / 2}
-                // minPolarAngle={Math.PI / 3}
-                // maxPolarAngle={Math.PI / 3}
-                enableZoom={true}
-                enablePan={true}
-                zoomSpeed={0.3}
-            />
-
-        </>
-    );
+        <mesh
+            ref={ref}
+            onClick={(e) => console.log('click')}
+            onPointerOver={(e) => console.log('hover')}
+            onPointerOut={(e) => console.log('unhover')}>
+            <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+            <meshNormalMaterial attach="material" />
+        </mesh>
+    )
 }
+
+export default function Index() {
+    return (
+        <>
+            <Thing />
+            <gridHelper />
+        </>
+    )
+
+}
+
+// ReactDOM.render(
+//     <Canvas>
+//     </Canvas>,
+//     document.getElementById('root')
+// )
