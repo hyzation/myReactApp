@@ -34,3 +34,7 @@
 .appTagBox:hover {
     box-shadow: 2px 2px 1px #ddd;
 }
+
+.appTagBox>div {
+    text-align: center;
+}

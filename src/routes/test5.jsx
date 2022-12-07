@@ -1,10 +1,10 @@
-import Test4 from "../pages/test4/test4";
+import Test5 from "../pages/test5/test5";
 
 
 export default function Index() {
     return (
         <>
-            <Test4 />
+            <Test5 />
         </>
     );
 }
