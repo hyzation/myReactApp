@@ -27,7 +27,8 @@ export default function Index() {
     // const env = '/resource/env/view_1.hdr';
 
     const Model = () => {
-        const gltf = useLoader(GLTFLoader, '/model/cj2.glb');
+        // const gltf = useLoader(GLTFLoader, '/model/cj2.glb');
+        const gltf = useGLTF('/model/cj2.glb');
         return <primitive object={gltf.scene} scale={[scale, scale, scale]} />
     }
 
