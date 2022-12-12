@@ -3,8 +3,10 @@ import { Sky, PointerLockControls, KeyboardControls } from "@react-three/drei"
 import { Physics, Debug } from "@react-three/rapier"
 import Ground from "./Ground"
 import Player from "./Player"
-import { Cube, Statue, Hall1, Ship, Whale } from "./Cube"
+import { Cube, Statue, Hall1, Model, Ship, Whale } from "./Cube"
 import Stars from '../../components/Stars'
+
+import { Perf } from "r3f-perf";
 
 import './test5.css'
 
@@ -32,16 +34,19 @@ export default function Index() {
                         {/* <Cube position={[10, 0.5, 0]} /> */}
                         {/* <Cubes /> */}
                         <Statue position={[0, 0, -110]} rotation-y={-Math.PI} />
-                        <Hall1 position={[50, -0.5, -50]} rotation-y={-Math.PI / 2} />
+                        <Hall1 position={[50, -0.75, -50]} rotation-y={-Math.PI / 2} />
+                        <Model position={[-50, 0, -50]} />
                         {/* <Ship position={[50, 10, 50]} /> */}
                         <Whale position={[0, 1, -10]} />
-                        <Debug />
+                        {/* 显示周身体积线 */}
+                        {/* <Debug /> */}
                     </Physics>
                     <PointerLockControls />
 
                     {/* 测试用视角 */}
 
 
+                    <Perf position='bottom-right' />
                 </Canvas>
             </KeyboardControls>
         </>

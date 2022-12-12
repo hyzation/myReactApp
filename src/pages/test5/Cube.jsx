@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState, useEffect } from "react"
-import { useTexture, useGLTF, useFBX, useAnimations, Environment } from "@react-three/drei"
+import { useTexture, useGLTF, useFBX, useAnimations, Environment, Clone, MeshDistortMaterial } from "@react-three/drei"
 import { RigidBody } from "@react-three/rapier"
 import create from "zustand"
 import dirt from "./assets/dirt.jpg"
@@ -80,6 +80,44 @@ export const Hall1 = (props) => {
   )
 }
 
+// 展厅2
+export const Model = (props) => {
+  const { nodes } = useGLTF("/model/scene-transformed.glb");
+  return (
+    // <primitive object={nodes} />
+    <RigidBody {...props} type="fixed" colliders="hull">
+      <group dispose={null} scale={.1}>
+        <group name="_Chambre" rotation={[-Math.PI / 2, 0, 0]}>
+          <Clone object={nodes.Lit_ORANGE} castShadow receiveShadow />
+          <Clone object={nodes.Tele_NOIR}>
+          </Clone>
+          <Clone object={Object.values(nodes).filter((n) => n.name.startsWith('Tapis_'))} receiveShadow />
+          <Clone object={[nodes.Caisse_01_BLANC, nodes.Caisse_02_BLANC, nodes.Caisse_03_BLANC]} castShadow receiveShadow />
+          <Clone
+            object={nodes.Bac_fleurs_BLANC}
+            castShadow
+            receiveShadow
+            inject={(object) =>
+              object.name === 'Plante_VERT_VERT_0' && <MeshDistortMaterial speed={2.5} distort={0.25} color={[0.086, 0.58, 0.12]} roughness={0.3} />
+            }
+          />
+          <Clone object={nodes.Carres_muraux_GRIS} castShadow receiveShadow />
+          <Clone object={nodes.Fenetres_VITRE_VITRE_0} />
+          <Clone object={nodes.Stores_NOIR_NOIR_0} />
+          <Clone object={nodes.Tablette_NOIR_NOIR_0} />
+          <Clone object={nodes.Tasse_BLANC_BLANC_0} />
+          <Clone object={Object.values(nodes).filter((n) => n.name.startsWith('Vetement_'))} />
+          <Clone object={nodes.Tringle_METAL_METAL_0} />
+        </group>
+        <Clone object={nodes._Cuisine} castShadow receiveShadow />
+        <Clone object={nodes._Base} castShadow receiveShadow />
+        <Clone object={[nodes._Boites, nodes._Livres, nodes._Post_it, nodes._Ventilations]} castShadow />
+      </group>
+    </RigidBody>
+
+  )
+}
+
 // 飞船
 export const Ship = (props) => {
   const gltf = useLoader(GLTFLoader, '/model/spaceship.glb');
@@ -119,7 +157,6 @@ export const Whale = (props) => {
     // <RigidBody type="fixed" colliders="trimesh">
     <group>
       {/* <Environment preset="warehouse" /> */}
-      <spotLight castShadow color="white" intensity={2} position={[-50, 50, 40]} angle={0.25} penumbra={1} shadow-mapSize={[128, 128]} shadow-bias={0.00005} />
       <primitive {...props} ref={ref} object={nodes.scene} scale={1} />
     </group>
     // </RigidBody>

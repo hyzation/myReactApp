@@ -63,9 +63,9 @@ export default function Index() {
     return (
         <>
             <div className="sidebar">
-                <button onClick={() => { ChangeCamera(0, 0, 10) }}>1</button>
-                <button onClick={() => { ChangeCamera(0, 50, 0) }}>2</button>
-                <button onClick={() => { ChangeCamera(-10, 5, 10) }}>3</button>
+                <button onClick={() => { ChangeCamera(0, 0, 10) }}>Pos1</button>
+                <button onClick={() => { ChangeCamera(0, 50, 0) }}>Pos2</button>
+                <button onClick={() => { ChangeCamera(-10, 5, 10) }}>Pos3</button>
             </div>
             <Canvas style={{ width: '100%', height: '100vh', }}
                 onMouseDown={changeControl}

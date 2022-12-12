@@ -1,7 +1,8 @@
 import * as THREE from 'three'
 import { useEffect, useRef, useState } from 'react'
 import {
-    useGLTF, Clone,
+    useGLTF, 
+    Clone,
     MeshDistortMaterial,
     OrbitControls,
     PerspectiveCamera,
@@ -51,7 +52,7 @@ export default function Index({ ...props }) {
                 <Clone object={nodes._Cuisine} castShadow receiveShadow />
                 <Clone object={nodes._Base} castShadow receiveShadow />
                 <Clone object={[nodes._Boites, nodes._Livres, nodes._Post_it, nodes._Ventilations]} castShadow />
-                <Lights />
+                {/* <Lights /> */}
             </group>
         )
     }
