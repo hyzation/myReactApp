@@ -221,7 +221,7 @@ export default function Index({ props }) {
             <directionalLight position={[0, -5, 20]} color="white" intensity={2} />
             <Lights />
             <Rig />
-            <Environment preset="warehouse" />
+            <Environment files={'/hdr/warehouse.hdr'} />
 
             <OrbitControls
                 makeDefault

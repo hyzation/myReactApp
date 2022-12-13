@@ -62,9 +62,10 @@ export const Statue = (props) => {
   const gltf = useLoader(GLTFLoader, '/model/statue.glb');
   return (
     <RigidBody {...props} type="fixed" colliders="hull">
-      <primitive
+      <Clone
         object={gltf.scene}
         scale={.1}
+        castShadow receiveShadow
       />
     </RigidBody>
   )
@@ -75,7 +76,7 @@ export const Hall1 = (props) => {
   const gltf1 = useLoader(GLTFLoader, '/model/cj2.glb');
   return (
     <RigidBody {...props} type="fixed" colliders="cuboid">
-      <primitive object={gltf1.scene} scale={2} />
+      <Clone object={gltf1.scene} scale={2} castShadow receiveShadow />
     </RigidBody>
   )
 }
@@ -87,7 +88,7 @@ export const Model = (props) => {
     // <primitive object={nodes} />
     <RigidBody {...props} type="fixed" colliders="hull">
       <group dispose={null} scale={.1}>
-        <group name="_Chambre" rotation={[-Math.PI / 2, 0, 0]}>
+        {/* <group name="_Chambre" rotation={[-Math.PI / 2, 0, 0]}>
           <Clone object={nodes.Lit_ORANGE} castShadow receiveShadow />
           <Clone object={nodes.Tele_NOIR}>
           </Clone>
@@ -108,10 +109,10 @@ export const Model = (props) => {
           <Clone object={nodes.Tasse_BLANC_BLANC_0} />
           <Clone object={Object.values(nodes).filter((n) => n.name.startsWith('Vetement_'))} />
           <Clone object={nodes.Tringle_METAL_METAL_0} />
-        </group>
-        <Clone object={nodes._Cuisine} castShadow receiveShadow />
+        </group> */}
+        {/* <Clone object={nodes._Cuisine} castShadow receiveShadow /> */}
         <Clone object={nodes._Base} castShadow receiveShadow />
-        <Clone object={[nodes._Boites, nodes._Livres, nodes._Post_it, nodes._Ventilations]} castShadow />
+        {/* <Clone object={[nodes._Boites, nodes._Livres, nodes._Post_it, nodes._Ventilations]} castShadow /> */}
       </group>
     </RigidBody>
 

@@ -24,8 +24,8 @@ export default function Index() {
                 }} center>加载中...</Html>}>
 
                     <color attach="background" args={['#252530']} />
-                    <ambientLight intensity={0.01} />
-                    <hemisphereLight intensity={0.125} color="#8040df" groundColor="red" />
+                    {/* <ambientLight intensity={0.01} /> */}
+                    {/* <hemisphereLight intensity={0.125} color="#8040df" groundColor="red" /> */}
                     <spotLight castShadow color="orange" intensity={2} position={[-50, 50, 40]} angle={0.25} penumbra={1} shadow-mapSize={[128, 128]} shadow-bias={0.00005} />
 
 

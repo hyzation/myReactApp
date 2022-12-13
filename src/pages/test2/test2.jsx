@@ -29,7 +29,7 @@ export default function Index({ ...props }) {
                 <group name="_Chambre" rotation={[-Math.PI / 2, 0, 0]}>
                     <Clone object={nodes.Lit_ORANGE} castShadow receiveShadow />
                     <Clone object={nodes.Tele_NOIR}>
-                        <Screen />
+                        {/* <Screen /> */}
                     </Clone>
                     <Clone object={Object.values(nodes).filter((n) => n.name.startsWith('Tapis_'))} receiveShadow />
                     <Clone object={[nodes.Caisse_01_BLANC, nodes.Caisse_02_BLANC, nodes.Caisse_03_BLANC]} castShadow receiveShadow />

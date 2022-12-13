@@ -26,7 +26,11 @@ export default function Index() {
                 <Canvas shadows camera={{ fov: 45 }} >
                     {/* <Sky sunPosition={[100, 20, 100]} /> */}
                     <ambientLight intensity={0.3} />
-                    <pointLight castShadow intensity={0.8} position={[100, 100, 100]} />
+                    <pointLight castShadow intensity={0.8} position={[100, 100, 100]}
+                        shadow-mapSize-width={5000}
+                        shadow-mapSize-height={5000}
+                        shadow-bias={-0.0001}
+                    />
                     {/* <Stars /> */}
                     <Physics gravity={[0, -30, 0]}>
                         <Ground />
@@ -34,10 +38,10 @@ export default function Index() {
                         {/* <Cube position={[10, 0.5, 0]} /> */}
                         {/* <Cubes /> */}
                         <Statue position={[0, 0, -110]} rotation-y={-Math.PI} />
-                        <Hall1 position={[50, -0.75, -50]} rotation-y={-Math.PI / 2} />
+                        <Hall1 position={[50, 20, -50]} rotation-y={-Math.PI / 2} />
                         <Model position={[-50, 0, -50]} />
                         {/* <Ship position={[50, 10, 50]} /> */}
-                        <Whale position={[0, 1, -10]} />
+                        <Whale position={[-10, 5, -10]} />
                         {/* 显示周身体积线 */}
                         {/* <Debug /> */}
                     </Physics>
