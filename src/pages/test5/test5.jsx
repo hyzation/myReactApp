@@ -46,7 +46,8 @@ export default function Index() {
                         {/* 展厅1 */}
                         <Hall1 position={[50, -.71, -50]} rotation-y={-Math.PI / 2} />
                         {/* 展厅2 */}
-                        <Model position={[-50, 0, -50]} />
+                        <Model position={[-50, -0.05, -50]} />
+                        {/* <Model position={[-150, -0.05, -50]} /> */}
                         {/* 飞船 */}
                         <Ship position={[48, 1.9, -73]} />
                         {/* 鲸 */}

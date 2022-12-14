@@ -18,10 +18,10 @@ export default function Ground(props) {
                 <MeshReflectorMaterial
                     // blur={[300, 100]}
                     resolution={1024}
-                    mixBlur={0.5}
-                    mixStrength={0.5}
-                    roughness={1}
-                    depthScale={1.2}
+                    mixBlur={0}
+                    mixStrength={1}
+                    roughness={10}
+                    depthScale={2}
                     minDepthThreshold={0.4}
                     maxDepthThreshold={1.4}
                     color="transparent"
