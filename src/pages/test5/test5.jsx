@@ -23,25 +23,35 @@ export default function Index() {
                     { name: "right", keys: ["ArrowRight", "d", "D"] },
                     { name: "jump", keys: ["Space"] },
                 ]}>
-                <Canvas shadows camera={{ fov: 45 }} >
+                <Canvas
+                    shadows
+                    camera={{ fov: 45 }}
+                >
                     {/* <Sky sunPosition={[100, 20, 100]} /> */}
                     <ambientLight intensity={0.3} />
                     <pointLight castShadow intensity={0.8} position={[100, 100, 100]}
-                        shadow-mapSize-width={5000}
-                        shadow-mapSize-height={5000}
+                        shadow-mapSize-height={1024}
+                        shadow-mapSize-width={1024}
+                        shadow-radius={10}
                         shadow-bias={-0.0001}
                     />
-                    {/* <Stars /> */}
+                    <Stars />
                     <Physics gravity={[0, -30, 0]}>
                         <Ground />
                         <Player />
                         {/* <Cube position={[10, 0.5, 0]} /> */}
                         {/* <Cubes /> */}
-                        <Statue position={[0, 0, -110]} rotation-y={-Math.PI} />
-                        <Hall1 position={[50, 20, -50]} rotation-y={-Math.PI / 2} />
+                        {/* 雕像 */}
+                        <Statue rotation-y={-Math.PI / 2} />
+                        {/* 展厅1 */}
+                        <Hall1 position={[50, -.71, -50]} rotation-y={-Math.PI / 2} />
+                        {/* 展厅2 */}
                         <Model position={[-50, 0, -50]} />
-                        {/* <Ship position={[50, 10, 50]} /> */}
-                        <Whale position={[-10, 5, -10]} />
+                        {/* 飞船 */}
+                        <Ship position={[48, 1.9, -73]} />
+                        {/* 鲸 */}
+                        <Whale position={[0, 90, 0]} />
+
                         {/* 显示周身体积线 */}
                         {/* <Debug /> */}
                     </Physics>

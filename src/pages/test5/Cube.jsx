@@ -1,12 +1,14 @@
 import { useCallback, useRef, useState, useEffect } from "react"
+import { useFrame } from '@react-three/fiber'
 import { useTexture, useGLTF, useFBX, useAnimations, Environment, Clone, MeshDistortMaterial } from "@react-three/drei"
-import { RigidBody } from "@react-three/rapier"
+import { RigidBody, RigidBodyApi } from "@react-three/rapier"
 import create from "zustand"
 import dirt from "./assets/dirt.jpg"
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useLoader } from "@react-three/fiber";
 
+import * as THREE from 'three'
 
 // This is a super naive implementation and wouldn't allow for more than a few thousand boxes.
 // In order to make this scale this has to be one instanced mesh, then it could easily be
@@ -47,7 +49,7 @@ export const Cube = (props) => {
   }, [])
   return (
     <RigidBody {...props} type="fixed" colliders="cuboid" ref={ref}>
-      <mesh receiveShadow castShadow onPointerMove={onMove} onPointerOut={onOut} onClick={onClick}>
+      <mesh onPointerMove={onMove} onPointerOut={onOut} onClick={onClick}>
         {[...Array(6)].map((_, index) => (
           <meshStandardMaterial attach={`material-${index}`} key={index} map={texture} color={hover === index ? "hotpink" : "white"} />
         ))}
@@ -60,14 +62,22 @@ export const Cube = (props) => {
 // 雕像
 export const Statue = (props) => {
   const gltf = useLoader(GLTFLoader, '/model/statue.glb');
+  const ref = useRef();
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime()
+    ref.current.setNextKinematicTranslation({ x: 48, y: 1.5 + Math.sin(t * 1) / 3, z: -42.2 })
+  })
+
   return (
-    <RigidBody {...props} type="fixed" colliders="hull">
-      <Clone
-        object={gltf.scene}
-        scale={.1}
-        castShadow receiveShadow
-      />
-    </RigidBody>
+    <group>
+      <RigidBody ref={ref} {...props} type="kinematicPosition" colliders="trimesh">
+        <Clone
+          object={gltf.scene}
+          scale={.007}
+        />
+      </RigidBody>
+    </group>
   )
 }
 
@@ -75,8 +85,8 @@ export const Statue = (props) => {
 export const Hall1 = (props) => {
   const gltf1 = useLoader(GLTFLoader, '/model/cj2.glb');
   return (
-    <RigidBody {...props} type="fixed" colliders="cuboid">
-      <Clone object={gltf1.scene} scale={2} castShadow receiveShadow />
+    <RigidBody {...props} type="fixed" colliders="trimesh">
+      <Clone object={gltf1.scene} scale={2} />
     </RigidBody>
   )
 }
@@ -111,7 +121,7 @@ export const Model = (props) => {
           <Clone object={nodes.Tringle_METAL_METAL_0} />
         </group> */}
         {/* <Clone object={nodes._Cuisine} castShadow receiveShadow /> */}
-        <Clone object={nodes._Base} castShadow receiveShadow />
+        <Clone object={nodes._Base} />
         {/* <Clone object={[nodes._Boites, nodes._Livres, nodes._Post_it, nodes._Ventilations]} castShadow /> */}
       </group>
     </RigidBody>
@@ -122,9 +132,13 @@ export const Model = (props) => {
 // 飞船
 export const Ship = (props) => {
   const gltf = useLoader(GLTFLoader, '/model/spaceship.glb');
+  const ref = useRef()
+  useFrame(() => {
+    ref.current.rotation.y -= 0.005;
+  });
   return (
-    <RigidBody {...props} type="fixed" colliders="cuboid">
-      <primitive object={gltf.scene} scale={3} />
+    <RigidBody {...props} type="fixed" colliders="cuboid" >
+      <primitive ref={ref} object={gltf.scene} scale={.4} />
     </RigidBody>
   )
 }
@@ -151,16 +165,19 @@ export const Ship = (props) => {
 export const Whale = (props) => {
   const nodes = useGLTF("/model/whale1.glb")
   const { ref, actions, names } = useAnimations(nodes.animations)
+  const boxref = useRef()
   useEffect(() => {
     actions[names[0]].play();
   }, [actions, names]);
+  useFrame(() => {
+    boxref.current.rotation.y -= 0.002;
+  });
   return (
-    // <RigidBody type="fixed" colliders="trimesh">
-    <group>
-      {/* <Environment preset="warehouse" /> */}
-      <primitive {...props} ref={ref} object={nodes.scene} scale={1} />
-    </group>
-    // </RigidBody>
+    <RigidBody type="fixed" colliders="trimesh">
+      <group ref={boxref}>
+        {/* <Environment preset="warehouse" /> */}
+        <primitive {...props} ref={ref} object={nodes.scene} scale={50} position={[300, 60, 0]} />
+      </group>
+    </RigidBody>
   )
 }
-

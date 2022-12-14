@@ -30,6 +30,7 @@ export default function Index() {
         useFrame((state, delta) => {
             const step = 0.02
             if (!canControl) {
+                console.log(123);
                 state.camera.fov = THREE.MathUtils.lerp(state.camera.fov, zoom ? 10 : 42, step)
                 // state.camera.position.lerp(dummy.set(zoom ? 25 : 10, zoom ? 1 : 5, zoom ? 0 : 10), step)
                 state.camera.position.lerp(position, step)
@@ -41,15 +42,36 @@ export default function Index() {
 
         return (
             <mesh
+                castShadow
+                receiveShadow
                 ref={ref}
                 onClick={(e) => console.log('click')}
                 onPointerOver={(e) => console.log('hover')}
                 onPointerOut={(e) => console.log('unhover')}>
                 <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
-                <meshNormalMaterial attach="material" />
+                {/* <meshNormalMaterial attach="material" /> */}
+                <meshStandardMaterial color={"red"} />
             </mesh>
         )
     }
+
+    const Sphere = () => {
+        const sphereRef = useRef();
+
+        useFrame(() => {
+            // sphereRef.current.rotation.x += 0.1;
+            sphereRef.current.rotation.z -= 0.01;
+        });
+
+        return (
+            <group ref={sphereRef}>
+                <mesh castShadow receiveShadow position={[1, 1, 0]}>
+                    <sphereBufferGeometry args={[0.25, 24, 24]} />
+                    <meshStandardMaterial color={"blue"} />
+                </mesh>
+            </group>
+        );
+    };
 
     const ChangeCamera = (x, y, z) => {
         setCanControl(false)
@@ -67,14 +89,28 @@ export default function Index() {
                 <button onClick={() => { ChangeCamera(0, 50, 0) }}>Pos2</button>
                 <button onClick={() => { ChangeCamera(-10, 5, 10) }}>Pos3</button>
             </div>
-            <Canvas style={{ width: '100%', height: '100vh', }}
+            <Canvas
+                style={{ width: '100%', height: '100vh', }}
                 onMouseDown={changeControl}
+                shadows
+                // shadowMap={{ type: THREE.VSMShadowMap }}
             >
                 <Suspense fallback={<Html style={{
                     color: '#000000',
                     width: '100px',
                 }} center>加载中...</Html>}>
+
+                    <directionalLight
+                        position={[0, 5, 0]}
+                        castShadow
+                        shadow-mapSize-height={1024}
+                        shadow-mapSize-width={1024}
+                        shadow-radius={10}
+                        shadow-bias={-0.0001}
+                    />
                     <Thing />
+                    <Sphere />
+
                     <gridHelper />
 
                     <OrbitControls
