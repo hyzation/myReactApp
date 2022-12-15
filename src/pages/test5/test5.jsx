@@ -1,9 +1,11 @@
 import { Canvas } from "@react-three/fiber"
-import { Sky, PointerLockControls, KeyboardControls } from "@react-three/drei"
+import { Sky, PointerLockControls, KeyboardControls, OrbitControls } from "@react-three/drei"
 import { Physics, Debug } from "@react-three/rapier"
+import { useControls } from 'leva'
+
 import Ground from "./Ground"
 import Player from "./Player"
-import { Cube, Statue, Hall1, Model, Ship, Whale } from "./Cube"
+import { Cube, Cubes, Hall1, Hall2, Enter, Gemini, Ship, Whale, Sphere } from "./Cube"
 import Stars from '../../components/Stars'
 
 import { Perf } from "r3f-perf";
@@ -12,6 +14,11 @@ import './test5.css'
 
 
 export default function Index() {
+    const { Hall1Pos, Hall2Pos, EnterPos } = useControls({
+        Hall1Pos: [-150, -1.8, 80],
+        Hall2Pos: [150, -1.8, 120],
+        EnterPos: [-17, 4, 255],
+    })
 
     return (
         <>
@@ -35,23 +42,24 @@ export default function Index() {
                         shadow-radius={10}
                         shadow-bias={-0.0001}
                     />
-                    <Stars />
+                    {/* 星空 */}
+                    {/* <Stars /> */}
                     <Physics gravity={[0, -30, 0]}>
                         <Ground />
+                        {/* 第一人称 */}
                         <Player />
                         {/* <Cube position={[10, 0.5, 0]} /> */}
                         {/* <Cubes /> */}
-                        {/* 雕像 */}
-                        <Statue rotation-y={-Math.PI / 2} />
+                        {/* 入口 */}
+                        <Enter position={EnterPos} />
                         {/* 展厅1 */}
-                        <Hall1 position={[50, -.71, -50]} rotation-y={-Math.PI / 2} />
+                        <Hall2 position={Hall1Pos} rotation-y={Math.PI / 2} />
                         {/* 展厅2 */}
-                        <Model position={[-50, -0.05, -50]} />
-                        {/* <Model position={[-150, -0.05, -50]} /> */}
-                        {/* 飞船 */}
-                        <Ship position={[48, 1.9, -73]} />
+                        {/* <Hall2 position={Hall2Pos} rotation-y={-Math.PI / 2} /> */}
+                        {/* 双子塔 */}
+                        {/* <Gemini position={[0, 500, -200]} /> */}
                         {/* 鲸 */}
-                        <Whale position={[0, 90, 0]} />
+                        {/* <Whale position={[0, 400, 0]} /> */}
 
                         {/* 显示周身体积线 */}
                         {/* <Debug /> */}
@@ -59,9 +67,20 @@ export default function Index() {
                     <PointerLockControls />
 
                     {/* 测试用视角 */}
+                    {/* <OrbitControls
+                        makeDefault
+                        minAzimuthAngle={0}
+                        minDistance={600}
+                        // minDistance={100}
+                        enableZoom={true}
+                        enablePan={true}
+                        zoomSpeed={0.3}
+                    /> */}
 
 
                     <Perf position='bottom-right' />
+
+
                 </Canvas>
             </KeyboardControls>
         </>

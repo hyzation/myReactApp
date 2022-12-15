@@ -6,7 +6,7 @@ import { useKeyboardControls } from "@react-three/drei"
 import { CapsuleCollider, RigidBody, useRapier } from "@react-three/rapier"
 // import Axe from "./Axe"
 
-const SPEED = 20
+const SPEED = 70
 const direction = new THREE.Vector3()
 const frontVector = new THREE.Vector3()
 const sideVector = new THREE.Vector3()
@@ -38,11 +38,11 @@ export default function Player({ lerp = THREE.MathUtils.lerp }) {
         const world = rapier.world.raw()
         const ray = world.castRay(new RAPIER.Ray(ref.current.translation(), { x: 0, y: -1, z: 0 }))
         const grounded = ray && ray.collider && Math.abs(ray.toi) <= 1.75
-        if (jump && grounded) ref.current.setLinvel({ x: 0, y: 102, z: 0 })
+        if (jump) ref.current.setLinvel({ x: 0, y: 102, z: 0 })
     })
     return (
         <>
-            <RigidBody ref={ref} colliders={false} mass={1} type="dynamic" position={[0, 10, 0]} enabledRotations={[false, false, false]}>
+            <RigidBody ref={ref} scale={3} colliders={false} mass={1} type="dynamic" position={[0, 50, 200]} enabledRotations={[false, false, false]}>
                 <CapsuleCollider args={[0.75, 0.5]} />
             </RigidBody>
             {/* <group ref={axe} onPointerMissed={(e) => (axe.current.children[0].rotation.x = -0.5)}>

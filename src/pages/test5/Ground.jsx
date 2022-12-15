@@ -10,12 +10,12 @@ export default function Ground(props) {
         <RigidBody {...props} type="fixed" colliders={false}>
             <mesh receiveShadow position={[0, 0, 0]} rotation-x={-Math.PI / 2}>
                 <planeGeometry args={[500, 500]} />
-                {/* <meshStandardMaterial
+                <meshStandardMaterial
                     map={texture}
                     map-repeat={[50, 50]}
                 // color="green"
-                /> */}
-                <MeshReflectorMaterial
+                />
+                {/* <MeshReflectorMaterial
                     // blur={[300, 100]}
                     resolution={1024}
                     mixBlur={0}
@@ -26,7 +26,10 @@ export default function Ground(props) {
                     maxDepthThreshold={1.4}
                     color="transparent"
                     metalness={1}
-                />
+                /> */}
+                {/* <meshStandardMaterial
+                    color="#green"
+                /> */}
             </mesh>
             <CuboidCollider args={[250, 0, 250]} position={[0, 0, 0]} />
         </RigidBody>
