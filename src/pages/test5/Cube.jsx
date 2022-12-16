@@ -1,6 +1,6 @@
-import { useCallback, useRef, useState, useEffect } from "react"
+import { useCallback, useRef, useState, useEffect, Suspense } from "react"
 import { useFrame } from '@react-three/fiber'
-import { useTexture, useGLTF, useFBX, useAnimations, Environment, Clone, MeshDistortMaterial, Billboard, Sparkles, } from "@react-three/drei"
+import { useTexture, useGLTF, useFBX, useAnimations, Environment, Clone, MeshDistortMaterial, Billboard, Sparkles, PositionalAudio, RenderTexture, Text, PerspectiveCamera, Decal } from "@react-three/drei"
 import { RigidBody, RigidBodyApi } from "@react-three/rapier"
 import { LayerMaterial, Depth } from 'lamina'
 import { useControls } from 'leva'
@@ -89,9 +89,9 @@ export const Hall1 = (props) => {
 export const Hall2 = (props) => {
   const gltf1 = useLoader(GLTFLoader, '/model/buildings/cj2.glb');
   return (
-    <RigidBody {...props} type="fixed" colliders="hull">
-      <Clone object={gltf1.scene} scale={2} />
-      <Ship position={[-30, 2.5, 1.8]} />
+    <RigidBody {...props} type="fixed" colliders="cuboid">
+      <Clone object={gltf1.scene} scale={5} />
+      {/* <Ship position={[-30, 2.5, 1.8]} /> */}
     </RigidBody>
   )
 }
@@ -186,6 +186,38 @@ export const Whale = (props) => {
     // </RigidBody>
   )
 }
+
+
+// 背景音乐盒子
+export const Bgm = (props) => {
+  const sound = useRef()
+  const textRef = useRef()
+
+  useEffect(() => {
+    // sound.current.play()
+  }, []);
+  return (
+    <Suspense fallback={null}>
+      <mesh {...props}>
+        {/* <torusGeometry args={[1, 0.075, 32, 64]} /> */}
+        <boxGeometry args={[16, 16, 16]} />
+        <meshStandardMaterial color={'black'} metalness={0} roughness={0.2} />
+        <Decal position={[0, -0.68, 0]} rotation={0} scale={[1.5, 0.15, 0.53]}>
+          <meshStandardMaterial roughness={0} transparent polygonOffset polygonOffsetFactor={-10}>
+            <RenderTexture attach="map" anisotropy={16}>
+              <PerspectiveCamera makeDefault manual aspect={2.5 / 1} position={[0, 0, 5]} />
+              <Text fontSize={1.75} letterSpacing={-0.05} color="yellow">
+                let the killing begin
+              </Text>
+            </RenderTexture>
+          </meshStandardMaterial>
+        </Decal>
+        {/* <PositionalAudio ref={sound} loop url="/sound/foreverYoung.mp3" distance={20} /> */}
+      </mesh>
+    </Suspense>
+  )
+}
+
 
 
 
