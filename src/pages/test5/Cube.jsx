@@ -1,10 +1,10 @@
 import { useCallback, useRef, useState, useEffect, Suspense } from "react"
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useTexture, useGLTF, useFBX, useAnimations, Environment, Clone, MeshDistortMaterial, Billboard, Sparkles, PositionalAudio, RenderTexture, Text, PerspectiveCamera, Decal, Detailed } from "@react-three/drei"
 import { RigidBody, RigidBodyApi } from "@react-three/rapier"
 import { LayerMaterial, Depth } from 'lamina'
 import { useControls } from 'leva'
-import { EffectComposer, Glitch, Bloom } from "@react-three/postprocessing";
+import { EffectComposer, Glitch, Bloom, Selection, Select, Outline, SelectiveBloom } from "@react-three/postprocessing";
 import { GlitchMode } from "postprocessing";
 
 import create from "zustand"
@@ -138,28 +138,8 @@ export const Ship = (props) => {
 // 雕像
 export const Statue = (props) => {
   const gltf = useLoader(GLTFLoader, '/model/face.glb');
-  const Effects = () => {
-    return (
-      <EffectComposer>
-        {/* <Glitch
-          delay={[0.5, 1.5]}
-          duration={[0.6, 1.0]}
-          strength={[0.1, 0.2]}
-          mode={GlitchMode.CONSTANT_MILD} // try CONSTANT_MILD
-          active={true} // toggle on/off
-          ratio={0.1}
-        /> */}
-        <Bloom
-          luminanceThreshold={0}
-          luminanceSmoothing={0.9}
-          height={300}
-          opacity={3}
-        />
-      </EffectComposer>
-    );
-  }
-  // const ref = useRef();
 
+  // const ref = useRef();
   // useFrame((state) => {
   //   const t = state.clock.getElapsedTime()
   //   ref.current.setNextKinematicTranslation({ x: -1200, y: 750 + Math.sin(t * 1) / 3, z: -80 })
@@ -167,13 +147,25 @@ export const Statue = (props) => {
 
   return (
     <group {...props}>
+      <Selection>
+        <EffectComposer>
+          <SelectiveBloom
+            luminanceThreshold={0}
+            luminanceSmoothing={0.1}
+            height={300}
+            opacity={3}
+          />
+        </EffectComposer>
+        <Select enabled={true}>
+          <Clone
+            // ref={ref} 
+            object={gltf.scene}
+            rotation={[Math.PI / 6, 0, 0]}
+          />
+        </Select>
+      </Selection>
       {/* <RigidBody ref={ref} {...props} type="kinematicPosition" colliders="cuboid"> */}
-      <Clone
-        // ref={ref} 
-        object={gltf.scene}
-        rotation={[Math.PI / 6, 0, 0]}
-      />
-      <Effects />
+
       {/* </RigidBody> */}
     </group>
   )
@@ -298,6 +290,7 @@ export const Whale = (props) => {
 // 背景音乐盒子(three)
 export const Bgm = (props) => {
   const ref = useRef()
+  const { size, viewport, camera, gl } = useThree()
   const [sound, setSound] = useState()
   const [listener, setListener] = useState()
   const [analyser, setAnalyser] = useState()
@@ -318,6 +311,14 @@ export const Bgm = (props) => {
       sound.play()
     })
   }, []);
+
+
+  useEffect(() => {
+    if (ref.current && camera && listener) {
+      camera.add(listener)
+      ref.current.add(sound)
+    }
+  }, [listener, camera, sound])
 
   useFrame((state) => {
     if (ref.current) {
