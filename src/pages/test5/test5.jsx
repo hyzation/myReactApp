@@ -43,7 +43,7 @@ export default function Index() {
                     // shadows
                     camera={{ fov: 50, far: 20000, }}
                 >
-                    {/* <NewSky /> */}
+                    <NewSky />
                     <Suspense fallback={null}>
                         {/* <Sky sunPosition={[100, 20, 100]}/> */}
                         <ambientLight intensity={.3} />
@@ -54,48 +54,48 @@ export default function Index() {
                             shadow-bias={-0.0001}
                         />
                         {/* 星空 */}
-                        {/* <Stars /> */}
+                        <Stars />
                         <Physics gravity={[0, -30, 0]}>
                             <Ground />
                             {/* 第一人称 */}
-                            {/* <Player position={Ppos} /> */}
+                            <Player position={Ppos} />
                             {/* 方块 */}
                             {/* <Cube position={[10, 0.5, 0]} /> */}
                             {/* <Cubes /> */}
                             {/* 入口 */}
                             {/* <Enter position={EnterPos} /> */}
                             {/* 展厅1 */}
-                            {/* <Hall1 position={Hall1Pos} rotation-y={Math.PI / 2} /> */}
+                            <Hall1 position={Hall1Pos} rotation-y={Math.PI / 2} />
                             {/* 展厅2 */}
-                            {/* <Hall2 position={Hall2Pos} rotation-y={-Math.PI / 2} /> */}
+                            <Hall2 position={Hall2Pos} rotation-y={-Math.PI / 2} />
                             {/* 双子塔 */}
                             {/* <Gemini position={[0, 500, -300]} /> */}
                             {/* 粒子立柱 */}
-                            {/* <LightTube position={[-300, 0, 350]} scale={20} /> */}
-                            {/* <LightTube position={[450, 0, 350]} scale={20} /> */}
-                            {/* <LightTube position={[50, 0, -200]} scale={20} /> */}
+                            <LightTube position={[-300, 0, 350]} scale={20} />
+                            <LightTube position={[450, 0, 350]} scale={20} />
+                            <LightTube position={[50, 0, -200]} scale={20} />
                             {/* 鲸 */}
-                            {/* <Whale position={[-370, 500, 100]} /> */}
+                            <Whale position={[-370, 500, 100]} />
                             {/* 中间球 */}
                             {/* <Sphere position={[0, 0, 0]} scale={20} /> */}
                             {/* 人脸 */}
-                            <Statue position={[-1300, 600, 0]} scale={1.9} rotation-y={Math.PI / 2} />
+                            <Statue position={[-1300, 600, -200]} scale={1.9} rotation-y={Math.PI / 2} />
                             {/* 行星圈 */}
-                            {/* <CityRing position={[0, 0, 2000]} scale={30} /> */}
+                            <CityRing position={[0, 0, 2000]} scale={30} />
                             {/* 魔法书 */}
-                            {/* <MagicBook position={[-180, 0, -215]} scale={1} click={toTheSky} /> */}
+                            <MagicBook position={[-180, 0, -215]} scale={1} click={toTheSky} />
                             {/* 背景音乐 */}
-                            {/* <Bgm position={[0, 0, 0]} scale={5} /> */}
+                            <Bgm position={[0, 0, 0]} scale={5} />
                             {/* 测试 */}
                             {/* <Test position={[-100, 0, 0]} scale={1} /> */}
 
                             {/* 显示周身体积线 */}
                             {/* <Debug /> */}
                         </Physics>
-                        {/* <PointerLockControls /> */}
+                        <PointerLockControls />
 
                         {/* 测试用视角 */}
-                        <OrbitControls
+                        {/* <OrbitControls
                             makeDefault
                             minAzimuthAngle={0}
                             minDistance={12}
@@ -103,7 +103,7 @@ export default function Index() {
                             enableZoom={true}
                             enablePan={true}
                             zoomSpeed={3}
-                        />
+                        /> */}
 
                         <Perf position='bottom-right' />
                     </Suspense>

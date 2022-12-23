@@ -15,7 +15,7 @@ export default function Ground(props) {
                     map-repeat={[50, 50]}
                 // color="green"
                 /> */}
-                <MeshReflectorMaterial
+                {/* <MeshReflectorMaterial
                     // blur={[300, 100]}
                     resolution={2048}
                     mixBlur={0}
@@ -27,10 +27,10 @@ export default function Ground(props) {
                     // color="rgb(20,23,70)"
                     color="#333"
                     metalness={3}
-                />
-                {/* <meshStandardMaterial
-                    color="grey"
                 /> */}
+                <meshStandardMaterial
+                    color="grey"
+                />
             </mesh>
             <CuboidCollider args={[400, 1, 400]} position={[0, 0, 0]} />
         </RigidBody>

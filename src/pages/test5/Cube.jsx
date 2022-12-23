@@ -145,9 +145,10 @@ export const Statue = (props) => {
   //   ref.current.setNextKinematicTranslation({ x: -1200, y: 750 + Math.sin(t * 1) / 3, z: -80 })
   // })
 
+
   return (
     <group {...props}>
-      <Selection>
+      {/* <Selection>
         <EffectComposer>
           <SelectiveBloom
             luminanceThreshold={0}
@@ -156,14 +157,14 @@ export const Statue = (props) => {
             opacity={3}
           />
         </EffectComposer>
-        <Select enabled={true}>
+        <Select enabled={true}> */}
           <Clone
             // ref={ref} 
             object={gltf.scene}
             rotation={[Math.PI / 6, 0, 0]}
           />
-        </Select>
-      </Selection>
+        {/* </Select>
+      </Selection> */}
       {/* <RigidBody ref={ref} {...props} type="kinematicPosition" colliders="cuboid"> */}
 
       {/* </RigidBody> */}
@@ -258,7 +259,7 @@ export const Whale = (props) => {
     actions[names[0]].play();
   }, [actions, names]);
   useFrame(() => {
-    boxref.current.rotation.y -= 0.02;
+    boxref.current.rotation.y -= 0.001;
   });
   return (
     // <RigidBody type="fixed" colliders="trimesh">
@@ -304,10 +305,10 @@ export const Bgm = (props) => {
     const analyser = new THREE.AudioAnalyser(sound, 32)
     setAnalyser(analyser)
     const audioLoader = new THREE.AudioLoader()
-    audioLoader.load('/sound/LookAtMe.mp3', (buffer) => {
+    audioLoader.load('/sound/SICKOMODE.mp3', (buffer) => {
       sound.setBuffer(buffer)
       sound.setLoop(true)
-      sound.setVolume(12)
+      sound.setVolume(32)
       sound.play()
     })
   }, []);
