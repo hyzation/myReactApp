@@ -12,7 +12,7 @@ const frontVector = new THREE.Vector3()
 const sideVector = new THREE.Vector3()
 const rotation = new THREE.Vector3()
 
-export default function Player({ lerp = THREE.MathUtils.lerp }) {
+export default function Player(props, { lerp = THREE.MathUtils.lerp }) {
     // const axe = useRef()
     const ref = useRef()
     const rapier = useRapier()
@@ -42,7 +42,7 @@ export default function Player({ lerp = THREE.MathUtils.lerp }) {
     })
     return (
         <>
-            <RigidBody ref={ref} scale={3} colliders={false} mass={1} type="dynamic" position={[0, 50, 200]} enabledRotations={[false, false, false]}>
+            <RigidBody {...props} ref={ref} scale={3} colliders={false} mass={1} type="dynamic" enabledRotations={[false, false, false]}>
                 <CapsuleCollider args={[0.75, 0.5]} />
             </RigidBody>
             {/* <group ref={axe} onPointerMissed={(e) => (axe.current.children[0].rotation.x = -0.5)}>
