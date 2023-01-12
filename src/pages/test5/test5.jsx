@@ -69,7 +69,7 @@ export default function Index() {
                             {/* 展厅2 */}
                             <Hall2 position={Hall2Pos} rotation-y={-Math.PI / 2} />
                             {/* 双子塔 */}
-                            {/* <Gemini position={[0, 500, -300]} /> */}
+                            <Gemini position={[0, 500, -300]} />
                             {/* 粒子立柱 */}
                             <LightTube position={[-300, 0, 350]} scale={20} />
                             <LightTube position={[450, 0, 350]} scale={20} />

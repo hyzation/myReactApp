@@ -23,7 +23,8 @@ export default function Home() {
         { name: 'cameraShake', src: '/test3', },
         { name: '平滑切换机位（lerp），阴影', src: '/test4', },
         { name: '第一人称', src: '/test5', },
-        { name: '测试', src: '/test6', },
+        { name: '组件传值', src: '/test6', },
+        { name: '测试', src: '/test7', },
     ]
 
     return (
