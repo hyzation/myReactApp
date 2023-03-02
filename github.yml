@@ -2,7 +2,7 @@ name: GitHub Actions Build and Deploy Demo
 on: # 指定触发workflow的条件，这里是指定了每push一次到main分支，则触发一次
   push:
     branches:
-      - main
+      - master
 jobs:  # workflows文件主体，可以指定一个或者多个，这里指定了一个job - build-and-deploy
   build-and-deploy:
     runs-on: ubuntu-latest # 在最新的ubuntu上运行
@@ -13,8 +13,8 @@ jobs:  # workflows文件主体，可以指定一个或者多个，这里指定�
         persist-credentials: false
     - name: Install and Build
       run: | # 该步骤要运行的命令，这里就是部署react 的命令
-        npm install
-        npm run-script build
+        yarn install
+        yarn start
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3 # 执行一些公开的action
       with:
