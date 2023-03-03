@@ -1,0 +1,2 @@
+.appBox{background:#eee;box-sizing:border-box;display:flex;flex-wrap:wrap;height:auto;justify-content:flex-start;min-height:100vh;padding:5vw;width:100%}.appTag{cursor:pointer;height:20vh;width:25%}.appTag,.appTagBox{align-items:center;display:flex;justify-content:center}.appTagBox{border:1px solid #eee;border-radius:20px;box-shadow:3px 3px 2px #999,-1px 1px 2px #999;height:90%;transition:all .3s;width:80%}.appTagBox:hover{box-shadow:2px 2px 1px #ddd}.appTagBox>div{text-align:center}
+/*# sourceMappingURL=965.f4fc14bc.chunk.css.map*/
