@@ -16,7 +16,7 @@ export default function Ground(props) {
                 // color="green"
                 /> */}
                 {/* <MeshReflectorMaterial
-                    // blur={[300, 100]}
+                    blur={[300, 100]}
                     resolution={2048}
                     mixBlur={0}
                     mixStrength={1}
@@ -24,12 +24,12 @@ export default function Ground(props) {
                     depthScale={20}
                     minDepthThreshold={2}
                     maxDepthThreshold={1.9}
-                    // color="rgb(20,23,70)"
-                    color="#333"
+                    color="rgb(20,23,70)"
+                    // color="#333"
                     metalness={3}
                 /> */}
                 <meshStandardMaterial
-                    color="grey"
+                    color="#fff"
                 />
             </mesh>
             <CuboidCollider args={[400, 1, 400]} position={[0, 0, 0]} />

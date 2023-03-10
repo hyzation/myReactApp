@@ -54,7 +54,7 @@ export default function Index() {
                             shadow-bias={-0.0001}
                         />
                         {/* 星空 */}
-                        <Stars />
+                        {/* <Stars /> */}
                         <Physics gravity={[0, -30, 0]}>
                             <Ground />
                             {/* 第一人称 */}
@@ -77,7 +77,7 @@ export default function Index() {
                             {/* 鲸 */}
                             <Whale position={[-370, 500, 100]} />
                             {/* 中间球 */}
-                            {/* <Sphere position={[0, 0, 0]} scale={20} /> */}
+                            <Sphere position={[0, 0, 0]} scale={20} />
                             {/* 人脸 */}
                             <Statue position={[-1300, 600, -200]} scale={1.9} rotation-y={Math.PI / 2} />
                             {/* 行星圈 */}
@@ -85,7 +85,7 @@ export default function Index() {
                             {/* 魔法书 */}
                             <MagicBook position={[-180, 0, -215]} scale={1} click={toTheSky} />
                             {/* 背景音乐 */}
-                            <Bgm position={[0, 0, 0]} scale={5} />
+                            {/* <Bgm position={[0, 0, 0]} scale={5} /> */}
                             {/* 测试 */}
                             {/* <Test position={[-100, 0, 0]} scale={1} /> */}
 
