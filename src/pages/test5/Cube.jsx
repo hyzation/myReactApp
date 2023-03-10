@@ -187,7 +187,7 @@ export const MagicBook = (props) => {
   }
   return (
     <RigidBody onPointerMove={onMove} onPointerOut={onOut} onClick={onClick} {...props} type="kinematicPosition" colliders="cuboid">
-      {/* <pointLight intensity={5} position={[0, 0, 0]} color={bookcolor} /> */}
+      <pointLight intensity={5} position={[0, 0, 0]} color={bookcolor} />
       <Clone object={gltf.scene} scale={1} />
     </RigidBody>
   )

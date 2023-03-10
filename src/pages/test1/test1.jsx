@@ -33,7 +33,7 @@ for (let i = 0; i < 50; i++) {
 function Plane() {
     return (
         <mesh position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-            <planeBufferGeometry attach="geometry" args={[1800, 1800]} ref={ref => ref && ref.translate(0, 0.5, 0)} />
+            <planeGeometry attach="geometry" args={[1800, 1800]} ref={ref => ref && ref.translate(0, 0.5, 0)} />
             <meshPhongMaterial attach="material" color="rgb(19,93,270)" flatShading={true} />
         </mesh>
     )

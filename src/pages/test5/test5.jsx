@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react'
+import { Suspense, useState } from 'react'
 import { Canvas } from "@react-three/fiber"
 import { Sky, PointerLockControls, KeyboardControls, OrbitControls, useTexture } from "@react-three/drei"
 import { Physics, Debug } from "@react-three/rapier"
@@ -15,7 +15,7 @@ import { Perf } from "r3f-perf";
 import './test5.css'
 
 
-export default function Index() {
+function Index() {
     const { Hall1Pos, Hall2Pos, EnterPos } = useControls({
         Hall1Pos: [-230, -1.9, 250],
         Hall2Pos: [230, -1.9, 250],
@@ -41,7 +41,7 @@ export default function Index() {
                 ]}>
                 <Canvas
                     // shadows
-                    camera={{ fov: 50, far: 20000, }}
+                    camera={{ fov: 50, far: 200, }}
                 >
                     <NewSky />
                     <Suspense fallback={null}>
@@ -65,25 +65,25 @@ export default function Index() {
                             {/* 入口 */}
                             {/* <Enter position={EnterPos} /> */}
                             {/* 展厅1 */}
-                            <Hall1 position={Hall1Pos} rotation-y={Math.PI / 2} />
+                            {/* <Hall1 position={Hall1Pos} rotation-y={Math.PI / 2} /> */}
                             {/* 展厅2 */}
-                            <Hall2 position={Hall2Pos} rotation-y={-Math.PI / 2} />
+                            {/* <Hall2 position={Hall2Pos} rotation-y={-Math.PI / 2} /> */}
                             {/* 双子塔 */}
-                            <Gemini position={[0, 500, -300]} />
+                            {/* <Gemini position={[0, 500, -300]} /> */}
                             {/* 粒子立柱 */}
-                            <LightTube position={[-300, 0, 350]} scale={20} />
-                            <LightTube position={[450, 0, 350]} scale={20} />
-                            <LightTube position={[50, 0, -200]} scale={20} />
+                            {/* <LightTube position={[-300, 0, 350]} scale={20} /> */}
+                            {/* <LightTube position={[450, 0, 350]} scale={20} /> */}
+                            {/* <LightTube position={[50, 0, -200]} scale={20} /> */}
                             {/* 鲸 */}
-                            <Whale position={[-370, 500, 100]} />
+                            {/* <Whale position={[-370, 500, 100]} /> */}
                             {/* 中间球 */}
-                            <Sphere position={[0, 0, 0]} scale={20} />
+                            {/* <Sphere position={[0, 0, 0]} scale={20} /> */}
                             {/* 人脸 */}
-                            <Statue position={[-1300, 600, -200]} scale={1.9} rotation-y={Math.PI / 2} />
+                            {/* <Statue position={[-1300, 600, -200]} scale={1.9} rotation-y={Math.PI / 2} /> */}
                             {/* 行星圈 */}
-                            <CityRing position={[0, 0, 2000]} scale={30} />
+                            {/* <CityRing position={[0, 0, 2000]} scale={30} /> */}
                             {/* 魔法书 */}
-                            <MagicBook position={[-180, 0, -215]} scale={1} click={toTheSky} />
+                            {/* <MagicBook position={[-180, 0, -215]} scale={1} click={toTheSky} /> */}
                             {/* 背景音乐 */}
                             {/* <Bgm position={[0, 0, 0]} scale={5} /> */}
                             {/* 测试 */}
@@ -113,3 +113,5 @@ export default function Index() {
     )
 
 }
+
+export default Index
