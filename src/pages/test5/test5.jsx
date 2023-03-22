@@ -1,6 +1,6 @@
 import { Suspense, useState } from 'react'
 import { Canvas } from "@react-three/fiber"
-import { Sky, PointerLockControls, KeyboardControls, OrbitControls, useTexture } from "@react-three/drei"
+import { Sky, PointerLockControls, KeyboardControls, OrbitControls } from "@react-three/drei"
 import { Physics, Debug } from "@react-three/rapier"
 import { useControls } from 'leva'
 
@@ -16,11 +16,11 @@ import './test5.css'
 
 
 function Index() {
-    const { Hall1Pos, Hall2Pos, EnterPos } = useControls({
-        Hall1Pos: [-230, -1.9, 250],
-        Hall2Pos: [230, -1.9, 250],
-        EnterPos: [-17, 4, 255],
-    })
+    // const { Hall1Pos, Hall2Pos, EnterPos } = useControls({
+    //     Hall1Pos: [-230, -1.9, 250],
+    //     Hall2Pos: [230, -1.9, 250],
+    //     EnterPos: [-17, 4, 255],
+    // })
 
     const [Ppos, setpPos] = useState([0, 50, 200])
 
@@ -41,12 +41,13 @@ function Index() {
                 ]}>
                 <Canvas
                     // shadows
-                    camera={{ fov: 50, far: 200, }}
+                    camera={{ fov: 50, far: 20000, }}
                 >
                     <NewSky />
                     <Suspense fallback={null}>
+
                         {/* <Sky sunPosition={[100, 20, 100]}/> */}
-                        <ambientLight intensity={.3} />
+                        {/* <ambientLight intensity={.3} /> */}
                         <pointLight castShadow intensity={0.8} position={[100, 100, 100]}
                             shadow-mapSize-height={1024}
                             shadow-mapSize-width={1024}
@@ -65,11 +66,11 @@ function Index() {
                             {/* 入口 */}
                             {/* <Enter position={EnterPos} /> */}
                             {/* 展厅1 */}
-                            {/* <Hall1 position={Hall1Pos} rotation-y={Math.PI / 2} /> */}
+                            <Hall1 position={[-230, -1.9, 250]} rotation-y={Math.PI / 2} />
                             {/* 展厅2 */}
-                            {/* <Hall2 position={Hall2Pos} rotation-y={-Math.PI / 2} /> */}
+                            <Hall2 position={[230, -1.9, 250]} rotation-y={-Math.PI / 2} />
                             {/* 双子塔 */}
-                            {/* <Gemini position={[0, 500, -300]} /> */}
+                            <Gemini position={[0, 500, -300]} />
                             {/* 粒子立柱 */}
                             {/* <LightTube position={[-300, 0, 350]} scale={20} /> */}
                             {/* <LightTube position={[450, 0, 350]} scale={20} /> */}
@@ -105,7 +106,7 @@ function Index() {
                             zoomSpeed={3}
                         /> */}
 
-                        <Perf position='bottom-right' />
+                        {/* <Perf position='bottom-right' /> */}
                     </Suspense>
                 </Canvas>
             </KeyboardControls>

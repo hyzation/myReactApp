@@ -93,6 +93,7 @@ export default function Index({ props }) {
           {(Material, props) => <Material metalness={0.25} color="rgb(207,216,220)" roughness={1} {...props} />}
         </MeshReflectorMaterial> */}
 
+                {/* 地面 */}
                 <mesh rotation={[-Math.PI / 2, 0, 0]}>
                     <planeGeometry args={[100, 100]} />
                     <MeshReflectorMaterial
@@ -105,7 +106,7 @@ export default function Index({ props }) {
                         minDepthThreshold={0.4}
                         maxDepthThreshold={1.4}
                         color="rgb(207,216,220)"
-                        metalness={0.5}
+                        metalness={1}
                     />
                 </mesh>
 
@@ -215,7 +216,7 @@ export default function Index({ props }) {
         <>
             <ambientLight intensity={0.5} />
             <Model position={[-4.5, -4, 0]} rotation={[0, -2.8, 0]} />
-            {/* <spotLight position={[50, 50, -30]} castShadow /> */}
+            <spotLight position={[50, 50, -30]} castShadow />
             {/* <pointLight position={[-10, -10, -10]} color="white" intensity={3} /> */}
             {/* <pointLight position={[0, -5, 5]} intensity={0.5} /> */}
             <directionalLight position={[0, -5, 20]} color="white" intensity={2} />

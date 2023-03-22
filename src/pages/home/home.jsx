@@ -25,6 +25,7 @@ export default function Home() {
         { name: '第一人称', src: '/test5', },
         { name: '组件传值', src: '/test6', },
         { name: '测试', src: '/test7', },
+        { name: '导入模型文件测试', src: '/test8', },
     ]
 
     return (

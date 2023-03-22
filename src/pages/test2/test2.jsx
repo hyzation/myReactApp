@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { useEffect, useRef, useState } from 'react'
 import {
-    useGLTF, 
+    useGLTF,
     Clone,
     MeshDistortMaterial,
     OrbitControls,
@@ -10,6 +10,7 @@ import {
 } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { BakeShadows } from '@react-three/drei';
+import { Perf } from "r3f-perf";
 
 export default function Index({ ...props }) {
     const pointLightPosition = [0, 10, 10];
@@ -164,6 +165,7 @@ export default function Index({ ...props }) {
                 enablePan={true}
                 zoomSpeed={0.3}
             />
+            <Perf position='bottom-right' />
 
         </>
     );

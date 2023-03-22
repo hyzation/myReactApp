@@ -1,5 +1,5 @@
 import React, { useRef, Suspense } from "react";
-import { Canvas, extend, useThree, useFrame } from "@react-three/fiber";
+import { Canvas, extend, useThree, useFrame, useLoader } from "@react-three/fiber";
 import {
     CubeTextureLoader,
     CubeCamera,
@@ -10,7 +10,9 @@ import {
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 // import "./styles.css";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { useGLTF, ContactShadows, OrbitControls, Environment } from "@react-three/drei";
+import { useGLTF, ContactShadows, OrbitControls, Environment, useTexture, Decal } from "@react-three/drei";
+import { Perf } from "r3f-perf";
+import * as THREE from 'three'
 
 extend({ OrbitControls });
 
@@ -37,60 +39,50 @@ const CameraControls = () => {
     );
 };
 
-// Loads the skybox texture and applies it to the scene.
-function SkyBox() {
-    const { scene } = useThree();
-    const loader = new CubeTextureLoader();
-    // The CubeTextureLoader load method takes an array of urls representing all 6 sides of the cube.
-    const texture = loader.load([
-        "/image/space3/right.jpg",
-        "/image/space3/left.jpg",
-        "/image/space3/right.jpg",
-        "/image/space3/bottom.jpg",
-        "/image/space3/front.jpg",
-        "/image/space3/back.jpg",
-    ]);
 
-    // Set the scene background property to the resulting texture.
-    scene.background = texture;
-    return null;
+const Model = () => {
+    const { nodes } = useGLTF("/model/bunny.gltf")
+    const nodes1 = useGLTF("/model/bunny.gltf")
+    const nodes2 = useLoader(GLTFLoader, '/model/buildings/emtrance.glb');
+
+    console.log(nodes);
+    // console.log(nodes1);
+    // console.log(nodes2);
+    return (
+        // <primitive object={nodes.Scene}
+        //     scale={2}
+        // />
+        <mesh castShadow receiveShadow geometry={nodes.bunny.geometry} dispose={null}>
+            <meshStandardMaterial
+                color="white"
+                roughness={0}
+                metalness={0.5}
+            />
+            <Mydecal props={nodes} />
+        </mesh>
+    )
 }
 
-function Zain(props) {
-    const group = useRef();
-    const { nodes, materials } = useGLTF("/superBrain.glb");
+
+
+const Mydecal = (props) => {
+    console.log(props);
+    let model = props.props.bunny
+    const texture = useTexture("/image/wut.jpg");
+    const handleDecalMove = () => {
+        console.log(123);
+    }
+
     return (
-        <group ref={group} {...props} dispose={null}>
-            <mesh
-                geometry={nodes.brain.geometry}
-                material={nodes.brain.material}
-                position={[-0.79, 0.55, -0.1]}
-                rotation={[1.58, 0, 0]}
-                scale={[3.59, 3.59, 3.59]}
-            />
-            <mesh
-                geometry={nodes.rightBrain.geometry}
-                material={nodes.rightBrain.material}
-                position={[0.05, 1.87, 0.75]}
-                rotation={[1.58, 0, 0]}
-                scale={[3.59, 3.59, 3.59]}
-            />
-            <mesh
-                geometry={nodes.amygdala.geometry}
-                material={nodes.amygdala.material}
-                position={[-0.77, 1.28, 0.89]}
-                rotation={[1.58, 0, 0]}
-                scale={[3.59, 3.59, 3.59]}
-            />
-            <mesh
-                geometry={nodes.leftBrain.geometry}
-                material={nodes.leftBrain.material}
-                position={[-1.49, 1.87, 0.75]}
-                rotation={[1.58, 0, 0]}
-                scale={[3.59, 3.59, 3.59]}
-            />
-        </group>
-    );
+            <Decal
+                position={[-1, 1.75, 0.6]} rotation={-0.7} scale={.25} map={texture} map-anisotropy={16}
+                // onPointerMove={handleDecalMove}
+                onClick={handleDecalMove}
+            // onPointerUp={() => console.log("Decal dropped!")}
+            >
+                {/* <meshStandardMaterial attach="material" map={texture} /> */}
+            </Decal>
+    )
 }
 
 // Geometry
@@ -99,31 +91,57 @@ function Zain(props) {
 function App() {
     return (
         <Canvas className="canvas" style={{ 'height': '100vh', }}>
+
+            <pointLight
+                castShadow
+                intensity={0.8}
+                position={[0, 100, 10]}
+                shadow-mapSize-height={1024}
+                shadow-mapSize-width={1024}
+                shadow-radius={10}
+                shadow-bias={-0.0001}
+            />
+
+            {/* <ambientLight
+                color='#fff'
+                intensity={0.2}
+                decay={2}
+            /> */}
+
             {/* <SkyBox /> */}
             <Environment
                 background={true} // can be true, false or "only" (which only sets the background) (default: false)
                 // path='/resource/env/steps/'
                 files={
-                    ["/image/space3/right.jpg",
-                        "/image/space3/left.jpg",
-                        "/image/space3/top.jpg",
-                        "/image/space3/bottom.jpg",
-                        "/image/space3/front.jpg",
-                        "/image/space3/back.jpg",]
+                    [
+                        "/image/space/right.jpg",
+                        "/image/space/left.jpg",
+                        "/image/space/top.jpg",
+                        "/image/space/bottom.jpg",
+                        "/image/space/front.jpg",
+                        "/image/space/back.jpg",
+                    ]
                 }
-                preset={null}
-                scene={undefined} // adds the ability to pass a custom THREE.Scene, can also be a ref
-                encoding={undefined} // adds the ability to pass a custom THREE.TextureEncoding (default: THREE.sRGBEncoding for an array of files and THREE.LinearEncoding for a single texture)
+                preset={false}
+                scene={false} // adds the ability to pass a custom THREE.Scene, can also be a ref
+                blur={1}
+            // encoding={undefined} // adds the ability to pass a custom THREE.TextureEncoding (default: THREE.sRGBEncoding for an array of files and THREE.LinearEncoding for a single texture)
             />
+
+            <Model />
+
             <OrbitControls
                 makeDefault
                 minAzimuthAngle={0}
-                minDistance={12}
-                // minDistance={100}
                 enableZoom={true}
                 enablePan={true}
                 zoomSpeed={3}
+                minDistance={2}
+                maxDistance={12}
             />
+            <Perf position='bottom-left' />
+            <ContactShadows resolution={512} position={[0, -0.8, 0]} opacity={1} scale={10} blur={1} far={8} />
+            {/* <ContactShadows resolution={512} position={[0, -0.8, 0]} opacity={1} scale={10} blur={2} far={8} /> */}
         </Canvas>
     );
 }
