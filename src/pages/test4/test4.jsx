@@ -116,12 +116,6 @@ export default function Index() {
                     <OrbitControls
                         makeDefault
                         minAzimuthAngle={0}
-                    // maxAzimuthAngle={Math.PI / 2}
-                    // minPolarAngle={Math.PI / 3}
-                    // maxPolarAngle={Math.PI / 3}
-                    // enableZoom={true}
-                    // enablePan={true}
-                    // zoomSpeed={0.3}
                     />
                 </Suspense>
             </Canvas>

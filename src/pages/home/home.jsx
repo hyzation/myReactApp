@@ -26,6 +26,9 @@ export default function Home() {
         { name: '组件传值', src: '/test6', },
         { name: '测试', src: '/test7', },
         { name: '导入模型文件测试', src: '/test8', },
+        { name: 'test', src: '/test9', },
+        { name: 'test', src: '/test10', },
+        { name: 'test', src: '/test11', },
     ]
 
     return (

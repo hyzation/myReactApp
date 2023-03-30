@@ -6,10 +6,13 @@ export const colors = [
 
 const state = proxy({
     intro: true,
-    anime: false,
+    anime: null,
+    originPos: [-4, 4.5, -3],
+    campos: [-4, 4.5, -3],
+    lookpos: [0, 0, 0],
     colors: ['#ccc', '#EFBD4E', '#80C670', '#726DE8', '#EF674E', '#353934'],
     decals: ['react', 'three2', 'pmndrs'],
-    color: '#EFBD4E',
+    color: '#ccc',
     decal: 'three2'
 })
 
