@@ -17,11 +17,7 @@ import { Menu } from './Menu'
 export default function Index() {
     const [anime, setAnime] = useState(true)
     const cam = useRef();
-
-    const startAnime = () => {
-        console.log(123);
-        setAnime(anime ? false : true)
-    }
+    const env = '/hdr/warehouse.hdr'
 
     // const Model = (props) => {
     //     const gltf = useLoader(GLTFLoader, '/model/test/supra_glb/scene.glb');
@@ -56,11 +52,9 @@ export default function Index() {
 
     return (
         <>
-            {/* <div className='anime1' onClick={startAnime}>111</div> */}
             <Suspense fallback={<Loader />}>
                 <Menu />
                 <Canvas className="canvas" style={{ 'height': '100vh', }}
-                    camera={{ position: [0, 0, -5], fov: 50 }}
                     shadows
                 >
                     {/* <Model scale={0.01} /> */}
@@ -85,9 +79,9 @@ export default function Index() {
 
                     {/* <gridHelper args={[10, 10, `white`]} /> */}
                     {/* <Grid renderOrder={-1} position={[0, 0, 0]} infiniteGrid cellSize={0.6} cellThickness={0.6} sectionSize={3.3} sectionThickness={1.5} sectionColor={[0.5, 0.5, 10]} fadeDistance={30} /> */}
-                    <Environment preset="sunset" background={true} blur={1} />
+                    <Environment files={env} background={true} blur={1} />
                     {/* <axesHelper args={[5]} /> */}
-                    <Perf position='bottom-right' />
+                    {/* <Perf position='bottom-right' /> */}
                 </Canvas>
             </Suspense>
 

@@ -3,8 +3,8 @@ import React, { useRef, useEffect, useState } from "react";
 import { useGLTF, useAnimations, useTexture } from "@react-three/drei";
 import { useSnapshot } from 'valtio'
 import { state } from './store'
-import { useSpring } from '@react-spring/three'
 import { useFrame } from "@react-three/fiber";
+import { useSpring, a } from "@react-spring/three";
 import * as THREE from 'three'
 
 export function AnimeCar(props) {
@@ -16,9 +16,9 @@ export function AnimeCar(props) {
     // const dummy = new THREE.Vector3()
     // const lookAtPos = new THREE.Vector3()
     const [position, setPos] = useState(snap.campos)
-    useFrame((state) => {
+    useFrame((mesher) => {
         const step = 0.01
-        state.camera.position.lerp({ x: position[0], y: position[1], z: position[2] }, step)
+        mesher.camera.position.lerp({ x: position[0], y: position[1], z: position[2] }, step)
     })
     useEffect(() => {
         setPos(snap.campos)
@@ -37,16 +37,19 @@ export function AnimeCar(props) {
     }, [actions, names, snap.anime]);
 
     // useSpring
-    const [springcolor, setspringcolor] = useState(null)
-
+    const [springcolor, setspringcolor] = useState("#000")
     useEffect(() => {
         setspringcolor(snap.color)
+        console.log(snap.color);
     }, [snap.color]);
 
     const { color } = useSpring({
         color: springcolor,
-        from: { color: "#fff" },
-    })
+        // from: { color: "#000" },
+        config: {
+            duration: 800,
+        }
+    });
 
 
     // useEffect(() => {
@@ -79,7 +82,7 @@ export function AnimeCar(props) {
                                             rotation={[-Math.PI / 2, 0, 0]}
                                             scale={100}
                                         />
-                                        <skinnedMesh
+                                        <a.skinnedMesh
                                             name="Object_78"
                                             castShadow
                                             receiveShadow
@@ -87,12 +90,13 @@ export function AnimeCar(props) {
                                             material={materials.Mat_Robot}
                                             skeleton={nodes.Object_78.skeleton}
                                         >
-                                            <meshStandardMaterial
-                                                color={state.color}
+                                            <a.meshStandardMaterial
+                                                attach="material"
+                                                color={color}
                                                 roughness={0.1}
                                                 metalness={0.9}
                                             />
-                                        </skinnedMesh>
+                                        </a.skinnedMesh>
                                     </group>
                                 </group>
                                 <group
