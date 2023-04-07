@@ -10,6 +10,7 @@ const state = proxy({
     originPos: [-4, 4.5, -3],
     campos: [-4, 4.5, -3],
     lookpos: [0, 0, 0],
+    canLerp: true,
     colors: ['#ccc', '#EFBD4E', '#80C670', '#726DE8', '#EF674E', '#353934'],
     decals: ['react', 'three2', 'pmndrs'],
     color: '#ccc',

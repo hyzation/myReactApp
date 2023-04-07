@@ -10,7 +10,7 @@ export const Menu = () => {
 
     const angle = [
         { name: '回到主页', pos: state.originPos, },
-        { name: '切换主驾', pos: [3, 10, 3], },
+        { name: '切换主驾', pos: [3, 3, 3], },
         { name: '切换副驾', pos: [-10, 10, -10], },
     ]
 
@@ -54,7 +54,7 @@ export const Menu = () => {
             <div className='angle_menu' style={{ 'opacity': showmenu == 4 ? '1' : '0', 'zIndex': showmenu == 4 ? '999' : '0', }}>
                 {
                     angle.map((item, index) => {
-                        return <div className='angle_tab' key={index} onClick={() => { state.campos = item.pos }}>{item.name}</div>
+                        return <div className='angle_tab' key={index} onClick={() => { state.campos = item.pos; state.canLerp = true }}>{item.name}</div>
                     })
                 }
             </div>

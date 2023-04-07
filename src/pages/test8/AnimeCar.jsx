@@ -14,11 +14,15 @@ export function AnimeCar(props) {
     const snap = useSnapshot(state)
 
     // const dummy = new THREE.Vector3()
-    // const lookAtPos = new THREE.Vector3()
+    const lookAtPos = new THREE.Vector3()
+
+    // 视角
     const [position, setPos] = useState(snap.campos)
     useFrame((mesher) => {
         const step = 0.01
-        mesher.camera.position.lerp({ x: position[0], y: position[1], z: position[2] }, step)
+        if (snap.canLerp) {
+            mesher.camera.position.lerp({ x: position[0], y: position[1], z: position[2] }, step)
+        }
     })
     useEffect(() => {
         setPos(snap.campos)
@@ -36,7 +40,7 @@ export function AnimeCar(props) {
         }
     }, [actions, names, snap.anime]);
 
-    // useSpring
+    // 换色过渡
     const [springcolor, setspringcolor] = useState("#000")
     useEffect(() => {
         setspringcolor(snap.color)

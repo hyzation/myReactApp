@@ -1,73 +1,141 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei"
-import { useSpring, a } from "@react-spring/three";
-import * as THREE from "three";
+import React, { useEffect, useRef, useState, Suspense } from 'react'
+import ReactDOM from 'react-dom'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { OrbitControls, Html, CameraControls } from '@react-three/drei'
+import { Vector3 } from 'three';
 
-function Box(props) {
-    const mesh = useRef();
+import './test10.css'
 
-    return (
-        <a.mesh ref={mesh} position={props.position} onClick={props.onClick}>
-            <a.boxBufferGeometry attach="geometry" args={props.args} />
-            <a.meshStandardMaterial attach="material" color={props.color} />
-        </a.mesh>
-    );
-}
+import * as THREE from 'three'
 
-function App() {
-    const cameraRef = useRef();
-    const [colorIndex, setColorIndex] = useState(0);
+// import './styles.css'
 
-    const colors = ["red", "yellow", "blue"];
-    // const positions = [
-    //     new THREE.Vector3(0, 0, 0),
-    //     new THREE.Vector3(10, 10, 10),
-    //     new THREE.Vector3(10, 10, 10)
-    // ];
+const dummy = new THREE.Vector3()
+const lookAtPos = new THREE.Vector3()
 
-    const handleClick = () => {
-        console.log((0 + 1) % 3);
-        setColorIndex((colorIndex + 1) % 3);
+export default function Index() {
+    const [position, setPos] = useState([10, 5, 10])
+    const [canControl, setCanControl] = useState(false)
+
+    const Thing = () => {
+        const ref = useRef()
+        const [zoom, setZoom] = useState(false)
+        // useEffect(() => {
+        //     setTimeout(() => {
+        //         setZoom((zoom) => !zoom)
+        //     }, 5000)
+        // }, [zoom])
+
+        // useFrame((state, delta) => {
+        //     const step = 0.02
+        //     if (!canControl) {
+        //         console.log(123);
+        //         state.camera.fov = THREE.MathUtils.lerp(state.camera.fov, zoom ? 10 : 42, step)
+        //         // state.camera.position.lerp(dummy.set(zoom ? 25 : 10, zoom ? 1 : 5, zoom ? 0 : 10), step)
+        //         state.camera.position.lerp(position, step)
+        //         // lookAtPos.x = Math.sin(state.clock.getElapsedTime() * 2)
+        //         // state.camera.lookAt(lookAtPos)
+        //         state.camera.updateProjectionMatrix()
+        //     }
+        // })
+
+        return (
+            <mesh
+                castShadow
+                receiveShadow
+                ref={ref}>
+                <boxGeometry attach="geometry" args={[1, 1, 1]} />
+                {/* <meshNormalMaterial attach="material" /> */}
+                <meshStandardMaterial color={"red"} />
+            </mesh>
+        )
+    }
+
+    const Sphere = () => {
+        const sphereRef = useRef();
+
+        return (
+            <group ref={sphereRef}>
+                <mesh castShadow receiveShadow position={[1, 1, 0]}>
+                    <sphereGeometry args={[0.25, 24, 24]} />
+                    <meshStandardMaterial color={"blue"} />
+                </mesh>
+            </group>
+        );
     };
 
-    const { color } = useSpring({
-        color: colors[colorIndex],
-        from: { color: "#fff" }
-    });
+    const ChangeCamera = (x, y, z, a, b, c) => {
+        // setCanControl(false)
+        // setPos(dummy.set(x, y, z))
+        settestpos([x, y, z, a, b, c])
+    }
+
+    const changeControl = () => {
+        setCanControl(true)
+    }
+
+
+    const [testpos, settestpos] = useState(null)
+    const Cameraset = () => {
+        const { DEG2RAD } = THREE.MathUtils
+        const cameraControlsRef = useRef()
+        useEffect(() => {
+            console.log(cameraControlsRef.current._camera);
+            // cameraControlsRef.current?.lerpLookAt(0, 0, 0, 0.5);
+            // cameraControlsRef.current.rotate(45 * DEG2RAD, -40 * DEG2RAD, 0.1)
+            if (testpos) {
+                cameraControlsRef.current.setLookAt(testpos[0], testpos[1], testpos[2], testpos[3], testpos[4], testpos[5], true)
+            }
+        }, [testpos]);
+
+        return (
+            <CameraControls
+                ref={cameraControlsRef}
+            />
+        )
+    }
+
 
     return (
-        <Canvas camera={{ position: [0, 0, 5] }} style={{ 'height': '100vh', }}>
-            <Box
-                position={[0, 0, 0]}
-                // rotation={[0, 0, 0]}
-                args={[1, 1, 1]}
-                color={color}
-                onClick={handleClick}
-            />
-            <mesh ref={cameraRef}>
-                {/* <perspectiveCamera
-                    position={[10, 10, 5]}
-                    fov={2000}
-                    aspect={window.innerWidth / window.innerHeight}
-                    // near={0.1}
-                    far={1000}
-                /> */}
-            </mesh>
-            <ambientLight intensity={0.5} />
-            <OrbitControls
-                makeDefault
-                target={[0, 0, 0]}
-                camera={cameraRef.current}
-                minAzimuthAngle={0}
-                enableZoom={true}
-                enablePan={true}
-            />
+        <>
+            <div className="sidebar">
+                <button onClick={() => { ChangeCamera(0, 10, 10, 20, 0, 2) }}>Pos1</button>
+                <button onClick={() => { ChangeCamera(0, 20, 0, 10, 2, 3) }}>Pos2</button>
+                <button onClick={() => { ChangeCamera(-10, 5, 10, 0, 0, 0) }}>Pos3</button>
+            </div>
+            <Canvas
+                style={{ width: '100%', height: '100vh', }}
+                onMouseDown={changeControl}
+                shadows
+            // shadowMap={{ type: THREE.VSMShadowMap }}
+            >
+                <Suspense fallback={<Html style={{
+                    color: '#000000',
+                    width: '100px',
+                }} center>加载中...</Html>}>
+                    <Cameraset />
+                    <directionalLight
+                        position={[0, 5, 0]}
+                        castShadow
+                        shadow-mapSize-height={1024}
+                        shadow-mapSize-width={1024}
+                        shadow-radius={10}
+                        shadow-bias={-0.0001}
+                    />
+                    <Thing />
+                    <Sphere />
 
-            <axesHelper args={[5]} />
-            <gridHelper args={[10, 10, `white`]} />
-        </Canvas>
-    );
+                    <gridHelper />
+
+                    <OrbitControls
+                        makeDefault
+                        minAzimuthAngle={0}
+                    />
+                </Suspense>
+            </Canvas>
+
+
+        </>
+    )
+
 }
-
-export default App;

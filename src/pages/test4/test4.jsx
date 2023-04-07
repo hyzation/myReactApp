@@ -35,7 +35,7 @@ export default function Index() {
                 // state.camera.position.lerp(dummy.set(zoom ? 25 : 10, zoom ? 1 : 5, zoom ? 0 : 10), step)
                 state.camera.position.lerp(position, step)
                 // lookAtPos.x = Math.sin(state.clock.getElapsedTime() * 2)
-                state.camera.lookAt(lookAtPos)
+                // state.camera.lookAt(lookAtPos)
                 state.camera.updateProjectionMatrix()
             }
         })
