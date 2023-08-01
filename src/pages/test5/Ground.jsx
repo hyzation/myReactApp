@@ -28,6 +28,18 @@ export default function Ground(props) {
                     // color="#333"
                     metalness={3}
                 /> */}
+                {/* <MeshReflectorMaterial
+                    blur={[300, 50]}
+                    resolution={1024}
+                    mixBlur={1}
+                    mixStrength={100}
+                    roughness={1}
+                    depthScale={1.2}
+                    minDepthThreshold={0.4}
+                    maxDepthThreshold={1.4}
+                    color="#202020"
+                    metalness={0.8}
+                /> */}
                 <meshStandardMaterial
                     color="#fff"
                 />

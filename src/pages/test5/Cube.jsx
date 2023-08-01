@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState, useEffect, Suspense } from "react"
 import { useFrame, useThree } from '@react-three/fiber'
-import { useTexture, useGLTF, useFBX, useAnimations, Environment, Clone, MeshDistortMaterial, Billboard, Sparkles, PositionalAudio, RenderTexture, Text, PerspectiveCamera, Decal, Detailed } from "@react-three/drei"
+import { Resize, useTexture, useGLTF, useFBX, useAnimations, Environment, Clone, MeshDistortMaterial, Billboard, Sparkles, PositionalAudio, RenderTexture, Text, PerspectiveCamera, Decal, Detailed } from "@react-three/drei"
 import { RigidBody, RigidBodyApi } from "@react-three/rapier"
 import { LayerMaterial, Depth } from 'lamina'
 import { useControls } from 'leva'
@@ -88,13 +88,20 @@ export const Hall1 = (props) => {
 
   return (
     <>
+
       <group ref={boxref} {...props}>
-        {/* <Environment preset="warehouse" /> */}
-        <primitive ref={ref} object={nodes.scene}
-          // position={[800, 0, 0]} scale={120}
-          position={[0, 14, 0]} scale={8}
-        />
-        {/* <Sparkles count={50} scale={[500,500,1200]} size={200} speed={2} position={[500, 12, 0]} /> */}
+        <Resize
+          scale={0.01}
+          rotation-y={-Math.PI / 2 + 0.3}
+          position-x={-0.1}
+        >
+          {/* <Environment preset="warehouse" /> */}
+          <primitive ref={ref} object={nodes.scene}
+            // position={[800, 0, 0]} scale={120}
+            position={[0, 14, 0]} scale={8}
+          />
+        </Resize>
+        <Sparkles count={50} scale={[500,500,1200]} size={200} speed={2} position={[500, 12, 0]} />
       </group>
     </>
   )
@@ -158,12 +165,12 @@ export const Statue = (props) => {
           />
         </EffectComposer>
         <Select enabled={true}> */}
-          <Clone
-            // ref={ref} 
-            object={gltf.scene}
-            rotation={[Math.PI / 6, 0, 0]}
-          />
-        {/* </Select>
+      <Clone
+        // ref={ref} 
+        object={gltf.scene}
+        rotation={[Math.PI / 6, 0, 0]}
+      />
+      {/* </Select>
       </Selection> */}
       {/* <RigidBody ref={ref} {...props} type="kinematicPosition" colliders="cuboid"> */}
 
