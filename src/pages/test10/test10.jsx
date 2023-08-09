@@ -19,6 +19,7 @@ export default function Index() {
 
     const Thing = () => {
         const ref = useRef()
+        useFrame(() => (ref.current.rotation.x = ref.current.rotation.y += 0.01))
         const [zoom, setZoom] = useState(false)
         // useEffect(() => {
         //     setTimeout(() => {
@@ -53,7 +54,9 @@ export default function Index() {
 
     const Sphere = () => {
         const sphereRef = useRef();
-
+        useFrame(() => {
+            sphereRef.current.rotation.z -= 0.01;
+        });
         return (
             <group ref={sphereRef}>
                 <mesh castShadow receiveShadow position={[1, 1, 0]}>

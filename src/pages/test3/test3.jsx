@@ -6,7 +6,7 @@ import {
     MeshReflectorMaterial,
     Environment,
     CameraShake,
-    useCursor,
+    useCursor
 } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useNavigate } from 'react-router-dom';
@@ -78,20 +78,20 @@ export default function Index({ props }) {
         return (
             <group ref={group} {...props} dispose={null}>
                 {/* <MeshReflectorMaterial
-          resolution={1024}
-          receiveShadow
-          mirror={8}
-          mixBlur={1}
-          mixStrength={0.3}
-          depthScale={1}
-          minDepthThreshold={0.8}
-          maxDepthThreshold={1}
-          position={[0, 0, 8]}
-          scale={[2, 2, 1]}
-          rotation={[-Math.PI / 2, 0, Math.PI]}
-          args={[70, 70]}>
-          {(Material, props) => <Material metalness={0.25} color="rgb(207,216,220)" roughness={1} {...props} />}
-        </MeshReflectorMaterial> */}
+                    resolution={1024}
+                    receiveShadow
+                    mirror={8}
+                    mixBlur={1}
+                    mixStrength={0.3}
+                    depthScale={1}
+                    minDepthThreshold={0.8}
+                    maxDepthThreshold={1}
+                    position={[0, 0, 8]}
+                    scale={[2, 2, 1]}
+                    rotation={[-Math.PI / 2, 0, Math.PI]}
+                    args={[70, 70]}>
+                    {(Material, props) => <Material metalness={0.25} color="rgb(207,216,220)" roughness={1} {...props} />}
+                </MeshReflectorMaterial> */}
 
                 {/* 地面 */}
                 <mesh rotation={[-Math.PI / 2, 0, 0]}>

@@ -148,12 +148,12 @@ export default function Index({ ...props }) {
                 position={[10, 10, 10]}
             />
 
-            {/* <pointLight
+            <pointLight
                 // ref={pointLight1}
                 position={pointLightPosition}
                 intensity={1}
                 distance={30}
-            /> */}
+            />
 
             <OrbitControls
                 makeDefault
